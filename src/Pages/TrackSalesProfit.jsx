@@ -161,10 +161,10 @@ const TrackSalesProfit = () => {
           <Typography variant="h6" sx={{ color: "black" }}>
             {period}
           </Typography>
-          <Typography variant="body1">
+          <Typography variant="body1" style={{color:'black'}}>
             <strong>Total Amount:</strong> Rs. {data.totalAmount.toFixed(2)}
           </Typography>
-          <Typography variant="body1">
+          <Typography variant="body1" style={{color:'black'}}>
             <strong>Total Profit:</strong> Rs. {data.totalProfit.toFixed(2)}
           </Typography>
           <TableContainer component={Paper} sx={{ mt: 2 }}>
