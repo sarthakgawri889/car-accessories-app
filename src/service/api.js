@@ -1,6 +1,6 @@
 import axios from "axios";
 
-const url = 'http://localhost:5000'
+const url = import.meta.env.VITE_API_URL
 
 export const addUser = async (data) => {
     try {
