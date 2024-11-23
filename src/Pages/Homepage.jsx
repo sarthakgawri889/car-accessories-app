@@ -4,9 +4,11 @@ import trackSalesBackground from "../assets/tracksales.jpeg";
 import inventoryBackground from "../assets/inventory.jpeg";
 import profitsBackground from "../assets/profits.png";
 import { Box } from "@mui/material";
+import { useNavigate } from "react-router-dom";
+import { useAuth0 } from "@auth0/auth0-react";
 function Homepage() {
-  //const navigate = useNavigate();
-
+  const navigate = useNavigate();
+  const { loginWithRedirect, isAuthenticated } = useAuth0();
   const cardData = [
     {
       title: "Manage Inventory",
@@ -15,18 +17,45 @@ function Homepage() {
       background: inventoryBackground,
     },
     {
-      title: "Track Sales Performance",
-      description: "Monitor sales trends and insights",
-      path: "/sales-performance",
+      title: "Sell Items",
+      description: "Sell Items With Ease ",
+      path: "/sell",
       background: trackSalesBackground,
     },
     {
-      title: "View Profits",
+      title: "View Sales & Profits",
       description: "Analyze daily, weekly, and monthly profits",
       path: "/profits",
       background: profitsBackground,
     },
   ];
+
+  const handleNavigation = (page) => {
+    if (page === "/inventory") {
+      if (isAuthenticated) {
+        navigate("/inventory");
+      } else {
+        loginWithRedirect();
+      }
+    }else if(page === "/sell"){
+      if (isAuthenticated) {
+        navigate("/itemSell");
+      } else {
+        loginWithRedirect();
+      }
+    }else if(page==="/profits"){
+      if (isAuthenticated) {
+        navigate("/track");
+      } else {
+        loginWithRedirect();
+      }
+    } else {
+      alert(`${page} is not configured yet.`);
+    }
+  }
+
+
+  
 
   return (
     <>
@@ -91,7 +120,7 @@ function Homepage() {
                 position: "relative",
                 overflow: "hidden",
               }}
-              // onClick={() => navigate(card.path)}
+              onClick={() => handleNavigation(card.path)}
               onMouseEnter={(e) => {
                 e.currentTarget.style.transform = "translateY(-10px)";
                 e.currentTarget.style.boxShadow =

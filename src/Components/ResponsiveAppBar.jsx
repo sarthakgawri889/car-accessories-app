@@ -82,19 +82,19 @@ function ResponsiveAppBar() {
       if (isAuthenticated) {
         navigate("/inventory");
       } else {
-        navigate("/");
+        loginWithRedirect();
       }
     }else if(page === "Sell"){
       if (isAuthenticated) {
         navigate("/itemSell");
       } else {
-        navigate("/");
+        loginWithRedirect();
       }
     }else if(page==="Track Sales & Profit"){
       if (isAuthenticated) {
         navigate("/track");
       } else {
-        navigate("/");
+        loginWithRedirect();
       }
     } else {
       alert(`${page} is not configured yet.`);
