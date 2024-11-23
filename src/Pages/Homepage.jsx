@@ -1,8 +1,9 @@
 import ResponsiveAppBar from "../Components/ResponsiveAppBar";
 import background from "../assets/download.svg";
 import trackSalesBackground from "../assets/tracksales.jpeg";
+import sellBackground from '../assets/sale.jpeg'
 import inventoryBackground from "../assets/inventory.jpeg";
-import profitsBackground from "../assets/profits.png";
+// import profitsBackground from "../assets/profits.png";
 import { Box } from "@mui/material";
 import { useNavigate } from "react-router-dom";
 import { useAuth0 } from "@auth0/auth0-react";
@@ -26,7 +27,7 @@ function Homepage() {
       title: "View Sales & Profits",
       description: "Analyze daily, weekly, and monthly profits",
       path: "/profits",
-      background: profitsBackground,
+      background: sellBackground,
     },
   ];
 
