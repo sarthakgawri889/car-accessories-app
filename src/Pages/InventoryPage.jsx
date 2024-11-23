@@ -346,6 +346,7 @@ function InventoryPage() {
 
           .table-container {
             width: 80%;
+            
             margin-bottom: 20px;
             border-radius: 15px;
             box-shadow: 0px 6px 10px rgba(0, 0, 0, 0.2);
@@ -359,7 +360,7 @@ function InventoryPage() {
 
           .total-text {
             font-weight: bold;
-            color: #fff;
+            color: #black;
           }
 
           @media (max-width: 768px) {
