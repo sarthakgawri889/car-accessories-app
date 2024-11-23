@@ -64,11 +64,11 @@ const TrackSalesProfit = () => {
           saleDate.getMonth() === currentDate.getMonth() &&
           saleDate.getFullYear() === currentDate.getFullYear()
         ) {
-          key = saleDate.toLocaleDateString("en-US", { month: "short", day: "numeric" });
+          key = saleDate.toLocaleDateString("en-US", { month: "short" });
         }
       } else if (period === "yearly") {
         if (saleDate.getFullYear() === currentDate.getFullYear()) {
-          key = saleDate.toLocaleDateString("en-US", { month: "short", year: "numeric" });
+          key = saleDate.toLocaleDateString("en-US", { year: "numeric" });
         }
       }
 
@@ -233,6 +233,7 @@ const TrackSalesProfit = () => {
           maxWidth: "1200px",
           margin: "7vh auto",
           backgroundColor: "background.default",
+          minHeight: "100vh", // Full height
         }}
       >
         <Typography
@@ -257,6 +258,9 @@ const TrackSalesProfit = () => {
               "& .MuiButton-root": {
                 minWidth: "120px",
                 flexGrow: 1,
+              },
+              "@media (max-width:600px)": {
+                gap: 0.5,
               },
             }}
           >
