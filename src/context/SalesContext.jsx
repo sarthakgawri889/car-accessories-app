@@ -1,6 +1,6 @@
 import { createContext, useState, useEffect, useContext } from "react";
 import { useAuth0 } from "@auth0/auth0-react";
-import { CurrentUserContext } from "../context/CurrentuserContext";
+import { CurrentUserContext } from "../context/CurrentUserContext.jsx";
 import { getSales } from "../service/sellapi.js";
 
 export const SalesContext = createContext();
