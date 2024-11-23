@@ -292,93 +292,86 @@ function InventoryPage() {
       <style>
         {`
           .inventory-background {
-              height: 100vh;
-              background-color: #f8f9fa; /* Light gray background */
-              /* Uncomment if using a background image */
-              /* background-image: url(${background}), linear-gradient(rgba(0, 0, 0, 0.7), rgba(0, 0, 0, 0.7)); */
-              /* background-size: cover; */
-              /* background-position: center; */
-              padding: 20px;
-              display: flex;
-              flex-direction: column;
-              align-items: center;
-              margin-top: 5vh;
-          }
-
-            .message-container {
-              text-align: center;
-              margin-bottom: 20px;
-            }
-
-            .title {
-              font-size: 2.5rem;
-              font-weight: bold;
-              color: black; /* Ensure proper color value */
-              margin-top: 5vh;
-            }
-
-            .subtitle {
-              font-size: 1.2rem;
-              color: black; /* Fix invalid color */
-            }
-
-            .form-container {
-              display: flex;
-              gap: 1rem;
-              flex-wrap: wrap;
-              background-color: white;
-              padding: 20px;
-              border-radius: 15px;
-              box-shadow: 0px 6px 10px rgba(0, 0, 0, 0.2);
-              margin-bottom: 2rem;
-              width: 80%;
-              justify-content: space-between;
-            }
-
-            .input-field {
-              flex: 1 1 calc(20% - 10px);
-              min-width: 150px;
-            }
-
-            .add-button {
-              flex: 1 1 calc(20% - 10px);
-              min-width: 150px;
-            }
-
-            .table-container {
-              width: 80%;
-              margin-bottom: 20px;
-              border-radius: 15px;
-              box-shadow: 0px 6px 10px rgba(0, 0, 0, 0.2);
-            }
-
-            .total-container {
-              margin-top: 10px;
-              text-align: right;
-              width: 80%;
-            }
-
-            .total-text {
-              font-weight: bold;
-              color: black; /* Fix invalid color */
-            }
-
-            /* Responsive Styling */
-            @media (max-width: 768px) {
-              .inventory-background {
                 height: 100vh;
-                background-color: #f8f9fa; /* Match desktop background color */
+                background-color: #f8f9fa; /* Light gray background */
+                /* Uncomment if using a background image */
+                /* background-image: url(${background}), linear-gradient(rgba(0, 0, 0, 0.7), rgba(0, 0, 0, 0.7)); */
+                /* background-size: cover; */
+                /* background-position: center; */
                 padding: 20px;
+                display: flex;
+                flex-direction: column;
+                align-items: center;
                 margin-top: 5vh;
               }
 
-              .form-container {
-                width: 100%;
+              .message-container {
+                text-align: center;
+                margin-bottom: 20px;
               }
 
-              .input-field,
+              .title {
+                font-size: 2.5rem;
+                font-weight: bold;
+                color: black; /* Ensure proper color value */
+                margin-top: 5vh;
+              }
+
+              .subtitle {
+                font-size: 1.2rem;
+                color: black; /* Fix invalid color */
+              }
+
+              .form-container {
+                display: flex;
+                gap: 1rem;
+                flex-wrap: wrap;
+                background-color: white;
+                padding: 20px;
+                border-radius: 15px;
+                box-shadow: 0px 6px 10px rgba(0, 0, 0, 0.2);
+                margin-bottom: 2rem;
+                width: 80%;
+                justify-content: space-between;
+              }
+
+              .input-field {
+                flex: 1 1 calc(20% - 10px);
+                min-width: 150px;
+              }
+
               .add-button {
-                flex: 1 1 100%;
+                flex: 1 1 calc(20% - 10px);
+                min-width: 150px;
+              }
+
+              .table-container {
+                width: 80%;
+                margin-bottom: 20px;
+                border-radius: 15px;
+                box-shadow: 0px 6px 10px rgba(0, 0, 0, 0.2);
+                background-color: white;
+                overflow-y: auto; /* Enable vertical scrolling for overflow content */
+                max-height: 400px; /* Limit height for better UX */
+                min-height: 200px; /* Ensure visibility on smaller screens */
+              }
+
+              .table-container table {
+                width: 100%;
+                border-collapse: collapse;
+              }
+
+              .table-container th,
+              .table-container td {
+                padding: 10px;
+                text-align: left;
+                border-bottom: 1px solid #ddd;
+              }
+
+              .total-container {
+                margin-top: 10px;
+                text-align: right;
+                width: 80%;
               }
 
               .total-text {
@@ -386,19 +379,46 @@ function InventoryPage() {
                 color: black; /* Fix invalid color */
               }
 
-              .table-container {
-                width: 100%;
+              /* Responsive Styling */
+              @media (max-width: 768px) {
+                .inventory-background {
+                  height: 100vh;
+                  background-color: #f8f9fa; /* Match desktop background color */
+                  padding: 20px;
+                  margin-top: 5vh;
+                }
+
+                .form-container {
+                  width: 100%;
+                }
+
+                .input-field,
+                .add-button {
+                  flex: 1 1 100%;
+                }
+
+                .total-text {
+                  font-weight: bold;
+                  color: black; /* Fix invalid color */
+                }
+
+                .table-container {
+                  width: 100%;
+                  overflow-y: auto; /* Enable scrolling on mobile */
+                  max-height: 300px; /* Adjust max height for smaller screens */
+                  min-height: 150px; /* Ensure table is visible */
+                }
+
+                .title {
+                  margin-top: 9vh;
+                }
+
+                .total-container {
+                  width: 100%;
+                  text-align: center;
+                }
               }
 
-              .title {
-                margin-top: 9vh;
-              }
-
-              .total-container {
-                width: 100%;
-                text-align: center;
-              }
-            }
 
         `}
       </style>
