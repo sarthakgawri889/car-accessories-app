@@ -35,6 +35,8 @@ const TrackSalesProfit = () => {
 
   if (!sales || sales.length === 0) {
     return (
+      <>
+        <ResponsiveAppBar/>
       <Typography
         variant="h6"
         align="center"
@@ -43,6 +45,8 @@ const TrackSalesProfit = () => {
       >
         No sales data available.
       </Typography>
+      </>
+      
     );
   }
 
