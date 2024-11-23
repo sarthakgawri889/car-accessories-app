@@ -14,7 +14,7 @@ import {
 } from "@mui/material";
 import { SalesContext } from "../context/SalesContext";
 import { ProductContext } from "../context/ProductContext";
-import { CurrentUserContext } from "../context/CurrentuserContext"; // Import user context
+import { CurrentUserContext } from "../context/CurrentUserContext"; // Import user context
 import ResponsiveAppBar from "../Components/ResponsiveAppBar";
 import jsPDF from "jspdf";
 

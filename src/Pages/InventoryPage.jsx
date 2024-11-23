@@ -1,7 +1,7 @@
 import { useState, useContext, useEffect } from "react";
 import background from "../assets/download.svg";
 import ResponsiveAppBar from "../Components/ResponsiveAppBar";
-import { CurrentUserContext } from "../context/CurrentuserContext";
+import { CurrentUserContext } from "../context/CurrentUserContext";
 import "jspdf-autotable"; 
 import {
   Box,
