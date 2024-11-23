@@ -246,7 +246,7 @@ const TrackSalesProfit = () => {
         sx={{
           p: { xs: 2, sm: 3 },
           maxWidth: "1200px",
-          margin: "10vh auto",
+          margin: "7vh auto",
           backgroundColor: "background.default",
         }}
       >
