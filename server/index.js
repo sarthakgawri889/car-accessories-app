@@ -7,7 +7,7 @@ import prodroute from './routes/product-route.js';
 import sellRoutes from "./routes/sellroute.js";
 
 const app = express();
-const PORT = process.env.PORT || 5000;
+const PORT = process.env.PORT || 8000;
 
 // Apply CORS middleware before defining routes
 app.use(cors()); // Allow requests from all origins

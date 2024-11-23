@@ -1,7 +1,7 @@
 import axios from "axios";
 
 // Base URL of your backend API
-const BASE_URL = "http://localhost:5000/api"; // Replace with your actual backend URL
+const BASE_URL = `${import.meta.env.VITE_API_URL}/api`; // Replace with your actual backend URL
 
 /**
  * Record a sale in the system.
