@@ -367,11 +367,18 @@ function InventoryPage() {
             .form-container {
               width: 100%;
             }
+            .subtitle {
+            color: #black;
+          }
 
             .input-field,
             .add-button {
               flex: 1 1 100%;
             }
+              .total-text {
+            font-weight: bold;
+            color: #black;
+          }
 
             .table-container {
               width: 100%;
