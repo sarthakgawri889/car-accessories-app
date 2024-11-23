@@ -1,5 +1,5 @@
 import { useState, useContext, useEffect } from "react";
-// import background from "../assets/download.svg";
+import background from "../assets/download.svg";
 import ResponsiveAppBar from "../Components/ResponsiveAppBar";
 import { CurrentUserContext } from "../context/CurrentUserContext";
 import "jspdf-autotable"; 
@@ -290,132 +290,118 @@ function InventoryPage() {
       </div>
 
       <style>
+       
         {`
           .inventory-background {
-.inventory-background {
-  height: 100vh;
-  background-color: #f8f9fa; /* Light gray background */
-  padding: 20px;
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  margin-top: 5vh;
-}
+              height: 100vh;
+              background-color: #f8f9fa; /* Light gray background */
+              /* Uncomment if using a background image */
+              /* background-image: url(${background}), linear-gradient(rgba(0, 0, 0, 0.7), rgba(0, 0, 0, 0.7)); */
+              /* background-size: cover; */
+              /* background-position: center; */
+              padding: 20px;
+              display: flex;
+              flex-direction: column;
+              align-items: center;
+              margin-top: 5vh;
+          }
 
-.message-container {
-  text-align: center;
-  margin-bottom: 20px;
-}
+            .message-container {
+              text-align: center;
+              margin-bottom: 20px;
+            }
 
-.title {
-  font-size: 2.5rem;
-  font-weight: bold;
-  color: black;
-  margin-top: 5vh;
-}
+            .title {
+              font-size: 2.5rem;
+              font-weight: bold;
+              color: black; /* Ensure proper color value */
+              margin-top: 5vh;
+            }
 
-.subtitle {
-  font-size: 1.2rem;
-  color: black;
-}
+            .subtitle {
+              font-size: 1.2rem;
+              color: black; /* Fix invalid color */
+            }
 
-.form-container {
-  display: flex;
-  gap: 1rem;
-  flex-wrap: wrap;
-  background-color: white;
-  padding: 20px;
-  border-radius: 15px;
-  box-shadow: 0px 6px 10px rgba(0, 0, 0, 0.2);
-  margin-bottom: 2rem;
-  width: 80%;
-  justify-content: space-between;
-}
+            .form-container {
+              display: flex;
+              gap: 1rem;
+              flex-wrap: wrap;
+              background-color: white;
+              padding: 20px;
+              border-radius: 15px;
+              box-shadow: 0px 6px 10px rgba(0, 0, 0, 0.2);
+              margin-bottom: 2rem;
+              width: 80%;
+              justify-content: space-between;
+            }
 
-.input-field {
-  flex: 1 1 calc(20% - 10px);
-  min-width: 150px;
-}
+            .input-field {
+              flex: 1 1 calc(20% - 10px);
+              min-width: 150px;
+            }
 
-.add-button {
-  flex: 1 1 calc(20% - 10px);
-  min-width: 150px;
-}
+            .add-button {
+              flex: 1 1 calc(20% - 10px);
+              min-width: 150px;
+            }
 
-.table-container {
-  width: 80%;
-  margin-bottom: 20px;
-  border-radius: 15px;
-  box-shadow: 0px 6px 10px rgba(0, 0, 0, 0.2);
-  background-color: white;
+            .table-container {
+              width: 80%;
+              margin-bottom: 20px;
+              border-radius: 15px;
+              box-shadow: 0px 6px 10px rgba(0, 0, 0, 0.2);
+            }
 
-  /* Dynamic height calculation */
-  height: calc(100vh - 250px); /* Adjust based on space occupied by other elements */
-  overflow-y: auto; /* Enable vertical scrolling for long tables */
-}
+            .total-container {
+              margin-top: 10px;
+              text-align: right;
+              width: 80%;
+            }
 
-.table-container table {
-  width: 100%;
-  border-collapse: collapse;
-}
+            .total-text {
+              font-weight: bold;
+              color: black; /* Fix invalid color */
+            }
 
-.table-container th,
-.table-container td {
-  padding: 10px;
-  text-align: left;
-  border-bottom: 1px solid #ddd;
-}
+            /* Responsive Styling */
+            @media (max-width: 768px) {
+              .inventory-background {
+                height: 100vh;
+                background-color: #f8f9fa; /* Match desktop background color */
+                padding: 20px;
+                margin-top: 5vh;
+              }
 
-.total-container {
-  margin-top: 10px;
-  text-align: right;
-  width: 80%;
-}
+              .form-container {
+                width: 100%;
+              }
 
-.total-text {
-  font-weight: bold;
-  color: black;
-}
+              .input-field,
+              .add-button {
+                flex: 1 1 100%;
+              }
 
-/* Responsive Styling */
-@media (max-width: 768px) {
-  .inventory-background {
-    height: 100vh;
-    background-color: #f8f9fa;
-    padding: 20px;
-    margin-top: 5vh;
-  }
+              .total-text {
+                font-weight: bold;
+                color: black; /* Fix invalid color */
+              }
 
-  .form-container {
-    width: 100%;
-  }
+              .table-container {
+                width: 100%;
+              }
 
-  .input-field,
-  .add-button {
-    flex: 1 1 100%;
-  }
+              .title {
+                margin-top: 9vh;
+              }
 
-  .total-text {
-    font-weight: bold;
-    color: black;
-  }
+              .total-container {
+                width: 100%;
+                text-align: center;
+              }
+            }
 
-  .table-container {
-    width: 100%;
-    height: calc(100vh - 300px); /* Adjust for smaller screens */
-    overflow-y: auto;
-  }
-
-  .title {
-    margin-top: 9vh;
-  }
-
-  .total-container {
-    width: 100%;
-    text-align: center;
-  }
-}
-
+       
 
 
         `}
