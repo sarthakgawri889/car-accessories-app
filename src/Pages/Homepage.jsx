@@ -189,7 +189,7 @@ function Homepage() {
           @media (max-width: 768px) {
             .homepage-background {
               margin-top: 0;
-              height: 187vh;
+              height: 100%;
             }
             .message-container {
               top: 10%;
