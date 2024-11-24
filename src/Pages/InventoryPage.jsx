@@ -86,7 +86,7 @@ function InventoryPage() {
     }
   };
   
-    console.log(products)
+  
 
   const handleDelete = async (productId) => {
     try {

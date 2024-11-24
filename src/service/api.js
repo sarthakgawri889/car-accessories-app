@@ -1,7 +1,7 @@
 import axios from "axios";
 
 const url =  import.meta.env.VITE_API_URL 
-console.log(url);
+
 export const addUser = async (data) => {
     try {
       await axios.post(`${url}/add`, data);
