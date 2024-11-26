@@ -276,9 +276,9 @@ const TrackSalesProfit = () => {
               },
             }}
           >
-            <Button onClick={() => setView("daily")}>Daily Sales</Button>
-            <Button onClick={() => setView("monthly")}>Monthly Sales</Button>
-            <Button onClick={() => setView("yearly")}>Yearly Sales</Button>
+            <Button onClick={() => setView("daily")}>Today Sales</Button>
+            <Button onClick={() => setView("monthly")}>Daily Sales</Button>
+            <Button onClick={() => setView("yearly")}>Monthly Sales</Button>
           </ButtonGroup>
         </Box>
         <Grid container spacing={3}>
