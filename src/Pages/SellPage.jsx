@@ -10,6 +10,7 @@ import {
   Button,
   Paper,
   Typography,
+  CircularProgress,
   Box,
 } from "@mui/material";
 import { SalesContext } from "../context/SalesContext";
@@ -25,11 +26,13 @@ const SellPage = () => {
   const { products } = useContext(ProductContext);
   const { refreshSales } = useContext(SalesContext);
   const { refreshProducts } = useContext(ProductContext);
-  const { currentUser } = useContext(CurrentUserContext); // Fetch current user details
+  const { currentUser,loading } = useContext(CurrentUserContext); // Fetch current user details
   const [productss, setProductss] = useState([]);
   const [cart, setCart] = useState([]);
   const [inputs, setInputs] = useState({});
   const [shopName, setShopName] = useState("");
+
+  
   
   useEffect(() => {
     if (Array.isArray(products) && products.length > 0) {
@@ -148,6 +151,13 @@ const SellPage = () => {
       alert("Failed to complete the sale.");
     }
   };
+  if (loading) {
+    return (
+      <Box display="flex" justifyContent="center" alignItems="center" minHeight="100vh">
+        <CircularProgress />
+      </Box>
+    );
+  }
 
   const generatePDF = (data) => {
     const doc = new jsPDF();

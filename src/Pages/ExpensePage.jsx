@@ -11,6 +11,7 @@ import {
   TableRow,
   Paper,
   IconButton,
+  CircularProgress,
   Typography,
 } from "@mui/material";
 import { Edit, Delete } from "@mui/icons-material";
@@ -21,7 +22,7 @@ import { useAuth0 } from "@auth0/auth0-react";
 import { useNavigate } from "react-router-dom";
 function ExpensePage() {
   const [expenses, setExpenses] = useState([]);
-  const { currentUser } = useContext(CurrentUserContext);
+  const { currentUser,loading } = useContext(CurrentUserContext);
   const [newExpense, setNewExpense] = useState({
     amount: "",
     description: "",
@@ -100,6 +101,14 @@ function ExpensePage() {
     const { name, value } = e.target;
     setNewExpense({ ...newExpense, [name]: value });
   };
+
+  if (loading) {
+    return (
+      <Box display="flex" justifyContent="center" alignItems="center" minHeight="100vh">
+        <CircularProgress />
+      </Box>
+    );
+  }
 
   
 

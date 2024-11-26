@@ -6,9 +6,15 @@ import inventoryBackground from "../assets/inventory.jpeg";
 import profitsBackground from "../assets/profits.png";
 import { Box } from "@mui/material";
 import { useNavigate } from "react-router-dom";
+import { CurrentUserContext } from "../context/CurrentUserContext";
 import { useAuth0 } from "@auth0/auth0-react";
+import { useContext } from "react";
+import {
+  CircularProgress,
+} from "@mui/material";
 function Homepage() {
   const navigate = useNavigate();
+  const { loading } = useContext(CurrentUserContext);
   const { loginWithRedirect, isAuthenticated } = useAuth0();
   const cardData = [
     {
@@ -55,7 +61,13 @@ function Homepage() {
     }
   }
 
-
+  if (loading) {
+    return (
+      <Box display="flex" justifyContent="center" alignItems="center" minHeight="100vh">
+        <CircularProgress />
+      </Box>
+    );
+  }
   
 
   return (

@@ -17,6 +17,9 @@ import {
   IconButton,
   Typography,
 } from "@mui/material";
+import {
+  CircularProgress,
+} from "@mui/material";
 import { Edit, Delete } from "@mui/icons-material";
 import { v4 as uuidv4 } from "uuid";
 
@@ -31,7 +34,7 @@ import { jsPDF } from "jspdf";
 
 function InventoryPage() {
   const [products, setProducts] = useState([]);
-  const { currentUser } = useContext(CurrentUserContext);
+  const { currentUser,loading } = useContext(CurrentUserContext);
   const { refreshProducts } = useContext(ProductContext);
   const [newProduct, setNewProduct] = useState({
     id: "",
@@ -115,6 +118,13 @@ function InventoryPage() {
       0
     );
   };
+  if (loading) {
+    return (
+      <Box display="flex" justifyContent="center" alignItems="center" minHeight="100vh">
+        <CircularProgress />
+      </Box>
+    );
+  }
 
   const handleDownloadPdf = () => {
     const doc = new jsPDF();
