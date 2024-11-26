@@ -134,7 +134,7 @@ function ExpensePage() {
           display: "flex",
           flexDirection: "column",
           alignItems: "center",
-          marginTop : '8vh'
+          marginTop : '7vh'
         }}
       >
         <Typography
