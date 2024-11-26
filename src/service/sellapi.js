@@ -1,7 +1,8 @@
 import axios from "axios";
 
 // Base URL of your backend API
-const BASE_URL = `${import.meta.env.VITE_API_URL}/api`; // Replace with your actual backend URL
+const BASE_URL= 'http://localhost:8000/api'
+// const BASE_URL = `${import.meta.env.VITE_API_URL}/api`; // Replace with your actual backend URL
 
 /**
  * Record a sale in the system.
@@ -25,3 +26,22 @@ export const recordSale = async (saleData) => {
 export const getSales = (userId) => axios.get(`${BASE_URL}/sales/${userId}`);
 
 
+export const handleReturnAPI = async (saleId, productId) => {
+  try {
+    const response = await axios.put(`${BASE_URL}/sales/return`, { saleId, productId });
+    return response.data;
+  } catch (err) {
+    console.error("Error handling return:", err);
+    throw err;
+  }
+};
+
+export const handlePaymentReceivedAPI = async (saleId, productId) => {
+  try {
+    const response = await axios.put(`${BASE_URL}/sales/payment-received`, { saleId, productId });
+    return response.data;
+  } catch (err) {
+    console.error("Error handling payment received:", err);
+    throw err;
+  }
+};

@@ -10,7 +10,8 @@ const salesSchema = mongoose.Schema({
       quantity: { type: Number, required: true },
       price: { type: Number, required: true },
       total: { type: Number, required: true },
-      profit: { type: Number, required: true }, // Add profit for each product
+      profit: { type: Number, required: true },
+      paymentStatus: { type: String, default: "pending" },// Add profit for each product
     },
   ],
   totalAmount: { type: Number, required: true },

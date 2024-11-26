@@ -1,7 +1,7 @@
 import axios from 'axios';
 
-const API_URL = `${import.meta.env.VITE_API_URL}/api/products`;
-
+// const API_URL = `${import.meta.env.VITE_API_URL}/api/products`;
+const API_URL = 'http://localhost:8000/api/products'
 export const getProducts = (userId) => axios.get(`${API_URL}/${userId}`);
 export const addProduct = (product) => {
   if (Array.isArray(product)) {

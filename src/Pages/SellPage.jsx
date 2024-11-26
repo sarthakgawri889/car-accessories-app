@@ -127,7 +127,8 @@ const SellPage = () => {
         quantity: item.quantity,
         price: item.price,
         total: item.total,
-        costPrice: productss.find((p) => p.productId === item.productId)?.price, // Assuming the original price is the cost price
+        costPrice: productss.find((p) => p.productId === item.productId)?.price,
+        paymentStatus: item.paymentStatus || "pending",// Assuming the original price is the cost price
       })),
       totalAmount: calculateTotal(),
     };
@@ -209,7 +210,7 @@ const SellPage = () => {
                 <TableCell>Product Name</TableCell>
                 <TableCell>Available Quantity</TableCell>
                 <TableCell>Vendor</TableCell>
-                <TableCell>Price</TableCell>
+                <TableCell>Cost</TableCell>
                 <TableCell>Quantity</TableCell>
                 <TableCell>Selling Price</TableCell>
                 <TableCell>Actions</TableCell>

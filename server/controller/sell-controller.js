@@ -38,7 +38,7 @@ export const recordSale = async (req, res) => {
           await inventoryProduct.save();
         }
 
-        return { ...product, profit };
+        return { ...product, profit, paymentStatus: product.paymentStatus || "pending" };
       })
     );
 
@@ -63,6 +63,73 @@ export const getSales = async (req, res) => {
   try {
     const sales = await Sale.find({ userId: req.params.userId });
     res.status(200).json(sales);
+  } catch (err) {
+    res.status(500).json({ message: err.message });
+  }
+};
+
+// Update product quantity and sales status when returned
+export const handleReturn = async (req, res) => {
+  try {
+    const { saleId, productId } = req.body;
+
+    const sale = await Sale.findById(saleId);
+    if (!sale) {
+      return res.status(404).json({ message: "Sale not found" });
+    }
+
+    const product = sale.products.find((p) => p.productId === productId);
+    if (!product) {
+      return res.status(404).json({ message: "Product not found in sale" });
+    }
+
+    if (product.paymentStatus === "returned") {
+      return res.status(400).json({ message: "Product already returned" });
+    }
+
+    const inventoryProduct = await Product.findOne({ productId });
+    if (!inventoryProduct) {
+      return res.status(404).json({ message: "Product not found in inventory" });
+    }
+
+    // Update inventory quantity
+    inventoryProduct.quantity += product.quantity;
+    await inventoryProduct.save();
+
+    // Update sale product status
+    product.paymentStatus = "returned";
+    await sale.save();
+
+    res.status(200).json({ message: "Product returned successfully", sale });
+  } catch (err) {
+    res.status(500).json({ message: err.message });
+  }
+};
+
+// Update payment status
+export const handlePaymentReceived = async (req, res) => {
+  try {
+    const { saleId, productId } = req.body;
+
+    const sale = await Sale.findById(saleId);
+    if (!sale) {
+      return res.status(404).json({ message: "Sale not found" });
+    }
+
+    const product = sale.products.find((p) => p.productId === productId);
+    if (!product) {
+      return res.status(404).json({ message: "Product not found in sale" });
+    }
+
+    if (product.paymentStatus === "received") {
+      return res.status(400).json({ message: "Payment already received" });
+    }
+
+    // Update payment status
+    product.paymentStatus = "received";
+    await sale.save();
+
+    res.status(200).json({ message: "Payment status updated successfully", sale });
   } catch (err) {
     res.status(500).json({ message: err.message });
   }

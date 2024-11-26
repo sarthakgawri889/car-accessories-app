@@ -2,7 +2,7 @@ import { useState, useContext, useEffect } from "react";
 import background from "../assets/download.svg";
 import ResponsiveAppBar from "../Components/ResponsiveAppBar";
 import { CurrentUserContext } from "../context/CurrentUserContext";
-import "jspdf-autotable"; 
+import "jspdf-autotable";
 import {
   Box,
   TextField,
@@ -18,7 +18,7 @@ import {
   Typography,
 } from "@mui/material";
 import { Edit, Delete } from "@mui/icons-material";
-import { v4 as uuidv4 } from 'uuid';
+import { v4 as uuidv4 } from "uuid";
 
 import {
   getProducts,
@@ -70,7 +70,7 @@ function InventoryPage() {
         quantity: parseInt(newProduct.quantity),
         vendor: newProduct.vendor,
       };
-  
+
       if (isEditing) {
         await updateProduct(editingProductId, productData);
       } else {
@@ -85,8 +85,6 @@ function InventoryPage() {
       console.error("Error saving product:", err);
     }
   };
-  
-  
 
   const handleDelete = async (productId) => {
     try {
@@ -112,7 +110,8 @@ function InventoryPage() {
   const calculateTotalStockPrice = () => {
     return products.reduce(
       (total, product) =>
-        total + parseFloat(product.price || 0) * parseInt(product.quantity || 0),
+        total +
+        parseFloat(product.price || 0) * parseInt(product.quantity || 0),
       0
     );
   };
@@ -125,64 +124,73 @@ function InventoryPage() {
     doc.text("Inventory Report", 14, 10);
 
     // Prepare the data for the table (headers and rows)
-    const headers = ["Product Name", "Price", "Quantity", "Vendor", "Total Price"];
+    const headers = [
+      "Product Name",
+      "Price",
+      "Quantity",
+      "Vendor",
+      "Total Price",
+    ];
     const rows = products.map((product) => [
-        product.name,
-        `${product.price.toFixed(2)} Rs.`,
-        product.quantity.toString(),
-        product.vendor,
-        `${(product.price * product.quantity).toFixed(2)} Rs.`
+      product.name,
+      `${product.price.toFixed(2)} Rs.`,
+      product.quantity.toString(),
+      product.vendor,
+      `${(product.price * product.quantity).toFixed(2)} Rs.`,
     ]);
 
     // Apply autoTable to generate the table
     doc.autoTable({
-        head: [headers],  // Table headers
-        body: rows,  // Table data
-        startY: 20,  // Start position for the table
-        theme: 'grid',  // Apply grid theme (with lines around cells)
-        styles: {
-            fontSize: 10,  // Font size for the table content
-            cellPadding: 4,  // Padding inside cells
-            halign: 'center',  // Center-align text in cells
-        },
-        headStyles: {
-            fillColor: [33, 150, 243],  // Header background color (blue)
-            textColor: [255, 255, 255],  // Header text color (white)
-            fontSize: 12,  // Header font size
-            fontStyle: 'bold',  // Bold font for header
-        },
-        bodyStyles: {
-            fillColor: [242, 242, 242],  // Light grey background for rows
-            textColor: [0, 0, 0],  // Black text color
-        },
-        alternateRowStyles: {
-            fillColor: [255, 255, 255],  // White background for alternate rows
-        }
+      head: [headers], // Table headers
+      body: rows, // Table data
+      startY: 20, // Start position for the table
+      theme: "grid", // Apply grid theme (with lines around cells)
+      styles: {
+        fontSize: 10, // Font size for the table content
+        cellPadding: 4, // Padding inside cells
+        halign: "center", // Center-align text in cells
+      },
+      headStyles: {
+        fillColor: [33, 150, 243], // Header background color (blue)
+        textColor: [255, 255, 255], // Header text color (white)
+        fontSize: 12, // Header font size
+        fontStyle: "bold", // Bold font for header
+      },
+      bodyStyles: {
+        fillColor: [242, 242, 242], // Light grey background for rows
+        textColor: [0, 0, 0], // Black text color
+      },
+      alternateRowStyles: {
+        fillColor: [255, 255, 255], // White background for alternate rows
+      },
     });
 
     // Add the total stock price below the table in a larger font
     const totalStockPrice = calculateTotalStockPrice();
     doc.setFontSize(14);
-    doc.text(`Total Stock Price: ${totalStockPrice.toFixed(2)} Rs.`, 14, doc.autoTable.previous.finalY + 10);
+    doc.text(
+      `Total Stock Price: ${totalStockPrice.toFixed(2)} Rs.`,
+      14,
+      doc.autoTable.previous.finalY + 10
+    );
 
     // Save the PDF
     doc.save("inventory_report.pdf");
-};
-
+  };
 
   return (
     <>
-       <Box
-  sx={{
-    position: "fixed", // Fix it to the top
-    top: 0, // Align to the top of the viewport
-    left: 0, // Align to the left
-    width: "100%", // Full width
-    zIndex: 1100, // Ensure it stays on top of other content
-  }}
->
-  <ResponsiveAppBar />
-</Box>
+      <Box
+        sx={{
+          position: "fixed", // Fix it to the top
+          top: 0, // Align to the top of the viewport
+          left: 0, // Align to the left
+          width: "100%", // Full width
+          zIndex: 1100, // Ensure it stays on top of other content
+        }}
+      >
+        <ResponsiveAppBar />
+      </Box>
       <div className="inventory-background">
         <div className="message-container">
           <Typography variant="h3" className="title">
@@ -194,7 +202,6 @@ function InventoryPage() {
         </div>
 
         <Box className="form-container">
-          
           <TextField
             label="Product Name"
             name="name"
@@ -251,9 +258,11 @@ function InventoryPage() {
                 <TableCell>Price</TableCell>
                 <TableCell>Quantity</TableCell>
                 <TableCell>Vendor</TableCell>
+                <TableCell>Date</TableCell> {/* Add Date column */}
                 <TableCell>Actions</TableCell>
               </TableRow>
             </TableHead>
+
             <TableBody>
               {products.map((product, index) => (
                 <TableRow key={index}>
@@ -262,7 +271,18 @@ function InventoryPage() {
                   <TableCell>{product.quantity}</TableCell>
                   <TableCell>{product.vendor}</TableCell>
                   <TableCell>
-                    <IconButton color="primary" onClick={() => handleEdit(product)}>
+                    {/* Format the date */}
+                    {new Date(product.date).toLocaleDateString("en-IN", {
+                      day: "numeric",
+                      month: "long",
+                      year: "numeric",
+                    })}
+                  </TableCell>
+                  <TableCell>
+                    <IconButton
+                      color="primary"
+                      onClick={() => handleEdit(product)}
+                    >
                       <Edit />
                     </IconButton>
                     <IconButton
@@ -284,13 +304,16 @@ function InventoryPage() {
           </Typography>
         </div>
 
-        <Button variant="contained" color="secondary" onClick={handleDownloadPdf}>
+        <Button
+          variant="contained"
+          color="secondary"
+          onClick={handleDownloadPdf}
+        >
           Download as PDF
         </Button>
       </div>
 
       <style>
-       
         {`
           .inventory-background {
               height: 100vh;

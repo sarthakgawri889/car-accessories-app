@@ -5,7 +5,7 @@ import cors from 'cors';
 import bodyParser from 'body-parser';
 import prodroute from './routes/product-route.js';
 import sellRoutes from "./routes/sellroute.js";
-
+import expenseRoutes from './routes/exp-route.js'
 const app = express();
 const PORT = process.env.PORT || 8000;
 
@@ -19,7 +19,8 @@ app.use(bodyParser.urlencoded({extended:true}));
 // Define your routes
 app.use('/', route);
 app.use("/api/products", prodroute);
-app.use("/api/sales", sellRoutes); // Use the sale routes here
+app.use("/api/sales", sellRoutes);
+app.use('/api/expenses', expenseRoutes); // Use the sale routes here
 
 app.get("/", (req, res) => {
     //server has sent the response

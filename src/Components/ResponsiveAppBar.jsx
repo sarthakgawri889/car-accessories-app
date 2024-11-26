@@ -18,7 +18,7 @@ import { addUser, getUsers } from "../service/api.js";
 import { useAuth0 } from "@auth0/auth0-react";
 import { useNavigate } from "react-router-dom";
 
-const pages = ["Manage Inventory", "Sell", "Track Sales & Profit"];
+const pages = ["Manage Inventory", "Sell","Track Payment","Track Sales & Profit","Expenses"];
 const settings = ["Logout"];
 
 function ResponsiveAppBar() {
@@ -96,7 +96,19 @@ function ResponsiveAppBar() {
       } else {
         loginWithRedirect();
       }
-    } else {
+    } else if(page==="Track Payment"){
+      if (isAuthenticated) {
+        navigate("/trackpay");
+      } else {
+        loginWithRedirect();
+      }
+    }else if(page==="Expenses"){
+      if (isAuthenticated) {
+        navigate("/expense");
+      } else {
+        loginWithRedirect();
+      }
+    }else {
       alert(`${page} is not configured yet.`);
     }
 
