@@ -25,8 +25,8 @@ import { recordSale } from "../service/sellapi.js"; // Import the API for backen
 const SellPage = () => {
   const { products } = useContext(ProductContext);
   const { refreshSales } = useContext(SalesContext);
-  const { refreshProducts } = useContext(ProductContext);
-  const { currentUser,loading } = useContext(CurrentUserContext); // Fetch current user details
+  const { refreshProducts,loading } = useContext(ProductContext);
+  const { currentUser } = useContext(CurrentUserContext); // Fetch current user details
   const [productss, setProductss] = useState([]);
   const [cart, setCart] = useState([]);
   const [inputs, setInputs] = useState({});
@@ -48,6 +48,14 @@ const SellPage = () => {
       );
     }
   }, [products]);
+
+  if (loading) {
+    return (
+      <Box display="flex" justifyContent="center" alignItems="center" minHeight="100vh">
+        <CircularProgress />
+      </Box>
+    );
+  }
 
   const handleInputChange = (productId, field, value) => {
     setInputs((prevInputs) => ({
@@ -151,13 +159,7 @@ const SellPage = () => {
       alert("Failed to complete the sale.");
     }
   };
-  if (loading) {
-    return (
-      <Box display="flex" justifyContent="center" alignItems="center" minHeight="100vh">
-        <CircularProgress />
-      </Box>
-    );
-  }
+ 
 
   const generatePDF = (data) => {
     const doc = new jsPDF();

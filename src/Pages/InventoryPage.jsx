@@ -34,8 +34,8 @@ import { jsPDF } from "jspdf";
 
 function InventoryPage() {
   const [products, setProducts] = useState([]);
-  const { currentUser,loading } = useContext(CurrentUserContext);
-  const { refreshProducts } = useContext(ProductContext);
+  const { currentUser } = useContext(CurrentUserContext);
+  const { refreshProducts,loading } = useContext(ProductContext);
   const [newProduct, setNewProduct] = useState({
     id: "",
     name: "",

@@ -26,6 +26,13 @@ const TrackPayment = () => {
   const { refreshProducts } = useContext(ProductContext);
   const [updating, setUpdating] = useState(false);
   const [selectedDate, setSelectedDate] = useState(dayjs()); // Default to today's date
+  if (loading) {
+    return (
+      <Box display="flex" justifyContent="center" alignItems="center" minHeight="100vh">
+        <CircularProgress />
+      </Box>
+    );
+  }
 
   const handlePaymentReceived = async (saleId, productId) => {
     setUpdating(true);
@@ -57,13 +64,7 @@ const TrackPayment = () => {
     dayjs(sale.date).isSame(selectedDate, "day")
   );
 
-  if (loading) {
-    return (
-      <Box display="flex" justifyContent="center" alignItems="center" minHeight="100vh">
-        <CircularProgress />
-      </Box>
-    );
-  }
+  
 
   return (
     <>
