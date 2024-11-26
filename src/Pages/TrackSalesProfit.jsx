@@ -53,6 +53,7 @@ const TrackSalesProfit = () => {
 
   // Helper function to group sales based on the view
 const groupSalesByPeriod = (sales, period) => {
+  console.log(sales)
   return sales
     .filter((sale) => sale.paymentStatus === "received") // Filter by payment status
     .reduce((acc, sale) => {
