@@ -2,6 +2,7 @@ import axios from 'axios';
 
 // URL of your backend API (change accordingly)
 const API_URL = `${import.meta.env.VITE_API_URL}/api/expenses`;
+// const API_URL = 'http://localhost:8000/api/expenses';
 
 // Fetch expenses
 export const getExpenses = async (userId) => {

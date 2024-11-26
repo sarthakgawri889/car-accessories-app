@@ -30,7 +30,7 @@ const SellPage = () => {
   const [cart, setCart] = useState([]);
   const [inputs, setInputs] = useState({});
   const [shopName, setShopName] = useState("");
-  console.log(currentUser?.sub);
+  
   useEffect(() => {
     if (Array.isArray(products) && products.length > 0) {
       setProductss(

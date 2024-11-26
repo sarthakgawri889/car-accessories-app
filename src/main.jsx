@@ -5,6 +5,8 @@ import { Auth0Provider } from "@auth0/auth0-react";
 import { CurrentUserProvider } from "./context/CurrentUserContext.jsx";
 import { ProductProvider } from "./context/ProductContext.jsx";
 import { SalesProvider } from "./context/SalesContext";
+import { LocalizationProvider } from "@mui/x-date-pickers";
+import { AdapterDayjs } from "@mui/x-date-pickers/AdapterDayjs";
 createRoot(document.getElementById("root")).render(
   <Auth0Provider
     domain="dev-4ox86uw3ji0xmnlk.us.auth0.com"
@@ -18,9 +20,10 @@ createRoot(document.getElementById("root")).render(
     <CurrentUserProvider>
     <SalesProvider>
       <ProductProvider>
-        
+      <LocalizationProvider dateAdapter={AdapterDayjs}>
         <App />
-         
+        </LocalizationProvider>
+
       </ProductProvider>
       </SalesProvider>
     </CurrentUserProvider>

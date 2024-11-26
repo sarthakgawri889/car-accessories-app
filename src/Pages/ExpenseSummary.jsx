@@ -193,9 +193,7 @@ const ExpenseSummary = () => {
                   <TableCell>
                     <strong>Description</strong>
                   </TableCell>
-                  <TableCell>
-                    <strong>Date</strong>
-                  </TableCell>
+                  
                   <TableCell>
                     <strong>Amount (₹)</strong>
                   </TableCell>
@@ -208,7 +206,7 @@ const ExpenseSummary = () => {
                 {data.details.map((expense, idx) => (
                   <TableRow key={idx}>
                     <TableCell>{expense.description}</TableCell>
-                    <TableCell>{new Date(expense.date).toLocaleDateString()}</TableCell>
+                   
                     <TableCell>₹{expense.amount.toFixed(2)}</TableCell>
                     <TableCell>{expense.paymentType}</TableCell>
                   </TableRow>

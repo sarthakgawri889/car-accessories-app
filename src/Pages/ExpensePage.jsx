@@ -106,7 +106,17 @@ function ExpensePage() {
   return (
     <>
     
-    <ResponsiveAppBar/>
+    <Box
+        sx={{
+          position: "fixed", // Fix it to the top
+          top: 0, // Align to the top of the viewport
+          left: 0, // Align to the left
+          width: "100%", // Full width
+          zIndex: 1100, // Ensure it stays on top of other content
+        }}
+      >
+        <ResponsiveAppBar />
+      </Box>
       <Box
         sx={{
           backgroundColor: "#f8f9fa",
@@ -115,6 +125,7 @@ function ExpensePage() {
           display: "flex",
           flexDirection: "column",
           alignItems: "center",
+          marginTop : '9vh'
         }}
       >
         <Typography
