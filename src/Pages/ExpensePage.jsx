@@ -222,7 +222,7 @@ function ExpensePage() {
             marginTop: "20px",
             borderRadius: "15px",
             boxShadow: "0px 6px 10px rgba(0, 0, 0, 0.2)",
-            width: "80%",
+            width: "100%",
           }}
         >
           <Table>
