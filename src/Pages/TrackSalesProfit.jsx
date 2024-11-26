@@ -52,49 +52,69 @@ const TrackSalesProfit = () => {
 
 
   // Helper function to group sales based on the view
+// Helper function to group sales based on the view
 const groupSalesByPeriod = (sales, period) => {
-  console.log(sales)
-  return sales
-    .filter((sale) => sale.paymentStatus === "received") // Filter by payment status
-    .reduce((acc, sale) => {
-      const saleDate = new Date(sale.date);
-      let key;
+  return sales.reduce((acc, sale) => {
+    const saleDate = new Date(sale.date);
+    let key;
 
-      if (period === "daily") {
-        // Filter sales for today only
-        if (
-          saleDate.getDate() === currentDate.getDate() &&
-          saleDate.getMonth() === currentDate.getMonth() &&
-          saleDate.getFullYear() === currentDate.getFullYear()
-        ) {
-          key = saleDate.toLocaleDateString("en-US", { month: "short", day: "numeric" });
-        }
-      } else if (period === "monthly") {
-        // Filter sales for the current month, grouped by day
-        if (
-          saleDate.getMonth() === currentDate.getMonth() &&
-          saleDate.getFullYear() === currentDate.getFullYear()
-        ) {
-          key = saleDate.toLocaleDateString("en-US", { month: "short", day: "numeric" });
-        }
-      } else if (period === "yearly") {
-        // Filter sales for the current year, grouped by month
-        if (saleDate.getFullYear() === currentDate.getFullYear()) {
-          key = saleDate.toLocaleDateString("en-US", { month: "short", year: "numeric" });
-        }
+    if (period === "daily") {
+      // Filter sales for today only
+      if (
+        saleDate.getDate() === currentDate.getDate() &&
+        saleDate.getMonth() === currentDate.getMonth() &&
+        saleDate.getFullYear() === currentDate.getFullYear()
+      ) {
+        key = saleDate.toLocaleDateString("en-US", { month: "short", day: "numeric" });
       }
+    } else if (period === "monthly") {
+      // Filter sales for the current month, grouped by day
+      if (
+        saleDate.getMonth() === currentDate.getMonth() &&
+        saleDate.getFullYear() === currentDate.getFullYear()
+      ) {
+        key = saleDate.toLocaleDateString("en-US", { month: "short", day: "numeric" });
+      }
+    } else if (period === "yearly") {
+      // Filter sales for the current year, grouped by month
+      if (saleDate.getFullYear() === currentDate.getFullYear()) {
+        key = saleDate.toLocaleDateString("en-US", { month: "short", year: "numeric" });
+      }
+    }
 
-      if (key) {
+    if (key) {
+      // Filter products by payment status
+      const filteredProducts = sale.products.filter(
+        (product) => product.paymentStatus === "received"
+      );
+
+      if (filteredProducts.length > 0) {
         if (!acc[key]) {
           acc[key] = { totalAmount: 0, totalProfit: 0, details: [] };
         }
-        acc[key].totalAmount += sale.totalAmount;
-        acc[key].totalProfit += sale.totalProfit;
-        acc[key].details.push(sale);
+
+        // Add totals for the filtered products only
+        const totalAmountForProducts = filteredProducts.reduce(
+          (sum, product) => sum + product.total,
+          0
+        );
+        const totalProfitForProducts = filteredProducts.reduce(
+          (sum, product) => sum + product.profit,
+          0
+        );
+
+        acc[key].totalAmount += totalAmountForProducts;
+        acc[key].totalProfit += totalProfitForProducts;
+
+        // Push the sale with filtered products
+        acc[key].details.push({ ...sale, products: filteredProducts });
       }
-      return acc;
-    }, {});
+    }
+
+    return acc;
+  }, {});
 };
+
 
 
   const groupedSales = groupSalesByPeriod(sales, view);
