@@ -275,7 +275,7 @@ const groupSalesByPeriod = (sales, period) => {
         sx={{
           p: { xs: 2, sm: 3 },
           maxWidth: "1200px",
-          margin: "9vh auto",
+          margin: "7vh auto",
           backgroundColor: "background.default",
         }}
       >
