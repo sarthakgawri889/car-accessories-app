@@ -112,7 +112,7 @@ const TrackPayment = () => {
                   <Typography variant="h6" color="primary">
                     Shop Name: {sale.shopName} | Date: {dayjs(sale.date).format("DD/MM/YYYY")}
                   </Typography>
-                  <TableContainer component={Paper} sx={{ mt: 2 }}>
+                  <TableContainer component={Paper} sx={{ mt: 2, height:'100vh' }}>
                     <Table size="small">
                       <TableHead>
                         <TableRow>
@@ -142,6 +142,7 @@ const TrackPayment = () => {
         flexDirection: { xs: "column", sm: "row" }, // Stack vertically on small screens
         alignItems: { xs: "stretch", sm: "center" }, // Full width for mobile
         gap: 1, // Space between buttons
+        
       }}
     >
       <Button
@@ -153,7 +154,7 @@ const TrackPayment = () => {
         sx={{
           fontSize: { xs: "0.75rem", sm: "0.875rem" }, // Smaller font for mobile
           padding: { xs: "6px 8px", sm: "8px 16px" },
-          height :'100vh' // Compact padding for mobile
+         
         }}
       >
         Returned
