@@ -1,6 +1,6 @@
 // src/Components/ResponsiveAppBar.jsx
 
-import { useState, useEffect } from "react";
+import { useState, useEffect,useContext } from "react";
 import AppBar from "@mui/material/AppBar";
 import Box from "@mui/material/Box";
 import Toolbar from "@mui/material/Toolbar";
@@ -16,6 +16,7 @@ import MenuItem from "@mui/material/MenuItem";
 import CarRepairIcon from "@mui/icons-material/CarRepair";
 import { addUser, getUsers } from "../service/api.js";
 import { useAuth0 } from "@auth0/auth0-react";
+import { CurrentUserContext } from "../context/CurrentUserContext";
 import { useNavigate } from "react-router-dom";
 import {
   CircularProgress,
@@ -28,7 +29,8 @@ function ResponsiveAppBar() {
   const [anchorElNav, setAnchorElNav] = useState(null);
   const [anchorElUser, setAnchorElUser] = useState(null);
   const [currentUser, setCurrentUser] = useState(null);
-  const [loading, setLoading] = useState(true);
+  const { loading } = useContext(CurrentUserContext);
+ 
 
   const { loginWithRedirect, user, logout, isAuthenticated } = useAuth0();
   const navigate = useNavigate();
@@ -69,12 +71,8 @@ function ResponsiveAppBar() {
           setCurrentUser(loggedInUser);
         } catch (error) {
           console.error("Error fetching user data:", error);
-        } finally {
-          setLoading(false);
-        }
-      } else {
-        setLoading(false);
-      }
+        } 
+      } 
     };
 
     fetchData();
