@@ -50,9 +50,12 @@ const TrackSalesProfit = () => {
     );
   }
 
+
   // Helper function to group sales based on the view
-  const groupSalesByPeriod = (sales, period) => {
-    return sales.reduce((acc, sale) => {
+const groupSalesByPeriod = (sales, period) => {
+  return sales
+    .filter((sale) => sale.paymentStatus === "received") // Filter by payment status
+    .reduce((acc, sale) => {
       const saleDate = new Date(sale.date);
       let key;
 
@@ -90,7 +93,8 @@ const TrackSalesProfit = () => {
       }
       return acc;
     }, {});
-  };
+};
+
 
   const groupedSales = groupSalesByPeriod(sales, view);
 
