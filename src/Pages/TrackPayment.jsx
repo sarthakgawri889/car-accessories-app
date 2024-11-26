@@ -152,7 +152,8 @@ const TrackPayment = () => {
         onClick={() => handleReturn(sale._id, product.productId)}
         sx={{
           fontSize: { xs: "0.75rem", sm: "0.875rem" }, // Smaller font for mobile
-          padding: { xs: "6px 8px", sm: "8px 16px" }, // Compact padding for mobile
+          padding: { xs: "6px 8px", sm: "8px 16px" },
+          height :'100vh' // Compact padding for mobile
         }}
       >
         Returned
