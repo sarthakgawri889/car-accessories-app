@@ -17,6 +17,9 @@ import CarRepairIcon from "@mui/icons-material/CarRepair";
 import { addUser, getUsers } from "../service/api.js";
 import { useAuth0 } from "@auth0/auth0-react";
 import { useNavigate } from "react-router-dom";
+import {
+  CircularProgress,
+} from "@mui/material";
 
 const pages = ["Manage Inventory", "Sell","Track Payment","Track Sales & Profit","Expenses"];
 const settings = ["Logout"];
@@ -27,7 +30,7 @@ function ResponsiveAppBar() {
   const [currentUser, setCurrentUser] = useState(null);
   const [loading, setLoading] = useState(true);
 
-  const { loginWithRedirect, user, logout, isAuthenticated, isLoading } = useAuth0();
+  const { loginWithRedirect, user, logout, isAuthenticated } = useAuth0();
   const navigate = useNavigate();
 
   const handleOpenNavMenu = (event) => {
@@ -119,8 +122,12 @@ function ResponsiveAppBar() {
 
   };
 
-  if (isLoading || loading) {
-    return <div>Loading...</div>;
+  if (loading) {
+    return (
+      <Box display="flex" justifyContent="center" alignItems="center" minHeight="100vh">
+        <CircularProgress />
+      </Box>
+    );
   }
 
   return (
