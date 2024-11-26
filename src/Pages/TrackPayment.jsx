@@ -79,7 +79,7 @@ const TrackPayment = () => {
       >
         <ResponsiveAppBar />
       </Box>
-      <Box sx={{ p: { xs: 2, sm: 3 }, maxWidth: "1200px", margin: "10vh auto",backgroundColor: "white" }}>
+      <Box sx={{ p: { xs: 2, sm: 3 }, maxWidth: "1200px", margin: "7.5vh auto",backgroundColor: "white" }}>
         <Typography
           variant="h4"
           align="center"
