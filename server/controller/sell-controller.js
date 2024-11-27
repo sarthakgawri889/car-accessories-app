@@ -108,37 +108,40 @@ export const handlePaymentReceived = async (req, res) => {
   try {
     const { saleId, productId } = req.body;
 
+    // Find the sale by ID
     const sale = await Sale.findById(saleId);
     if (!sale) {
       return res.status(404).json({ message: "Sale not found" });
     }
 
+    // Find the product in the sale
     const product = sale.products.find((p) => p.productId === productId);
     if (!product) {
       return res.status(404).json({ message: "Product not found in sale" });
     }
 
+    // Check if payment is already received
     if (product.paymentStatus === "received") {
       return res.status(400).json({ message: "Payment already received" });
     }
 
-    // Update payment status
+    // Update payment status to "received"
     product.paymentStatus = "received";
     await sale.save();
 
-    const inventoryProduct = await Product.findOne({
-      userId: sale.userId,
-      productId,
+    // Check and delete the product from inventory if payment is now received
+    const inventoryProduct = await Product.findOne({ 
+      userId: sale.userId, 
+      productId 
     });
 
     if (!inventoryProduct) {
       return res.status(404).json({ message: "Product not found in inventory" });
     }
 
+    // Delete the product only if its quantity is zero
     if (inventoryProduct.quantity === 0) {
-      await Product.findOneAndDelete({ userId, productId: product.productId });
-    } else {
-      await inventoryProduct.save();
+      await Product.deleteOne({ userId: sale.userId, productId });
     }
 
     res.status(200).json({ message: "Payment status updated successfully", sale });
@@ -146,3 +149,4 @@ export const handlePaymentReceived = async (req, res) => {
     res.status(500).json({ message: err.message });
   }
 };
+
