@@ -20,7 +20,7 @@ import { useNavigate } from "react-router-dom";
 import {
   CircularProgress,
 } from "@mui/material";
-const pages = ["Manage Inventory", "Sell","Track Payment","Track Sales & Profit","Expenses"];
+const pages = ["Manage Inventory", "Sell","Track Payment","Track Sales & Profit","Expenses","Order"];
 const settings = ["Logout"];
 
 function ResponsiveAppBar() {
@@ -107,6 +107,12 @@ function ResponsiveAppBar() {
     }else if(page==="Expenses"){
       if (isAuthenticated) {
         navigate("/expense");
+      } else {
+        loginWithRedirect();
+      }
+    }else if(page==="Order"){
+      if (isAuthenticated) {
+        navigate("/order");
       } else {
         loginWithRedirect();
       }

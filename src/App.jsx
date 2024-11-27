@@ -6,6 +6,7 @@ import TrackSalesProfit from "./Pages/TrackSalesProfit";
 import TrackPayment from "./Pages/TrackPayment";
 import ExpensePage from "./Pages/ExpensePage";
 import ExpenseSummary from "./Pages/ExpenseSummary";
+import SoldProducts from "./Pages/SoldProducts";
 
 function App() {
   return (
@@ -18,6 +19,7 @@ function App() {
         <Route path="/trackpay" element={<TrackPayment />} />
         <Route path="/expense" element={<ExpensePage />} />
         <Route path="/expenseSummary" element={<ExpenseSummary />} />
+        <Route path="/order" element={<SoldProducts />} />
 
       </Routes>
     </Router>
