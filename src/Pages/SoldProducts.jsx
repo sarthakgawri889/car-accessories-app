@@ -4,7 +4,7 @@ import { ProductContext } from "../context/ProductContext";
 const SoldProducts = () => {
   const [soldProducts, setSoldProducts] = useState([]);
   const { products } = useContext(ProductContext);
-
+console.log(products)
   // Fetch sold products
   useEffect(() => {
     const fetchSales = async () => {
