@@ -346,7 +346,7 @@ function InventoryPage() {
       <style>
         {`
           .inventory-background {
-              height: 100vh;
+              height: 200vh;
               background-color: #f8f9fa; /* Light gray background */
               /* Uncomment if using a background image */
               /* background-image: url(${background}), linear-gradient(rgba(0, 0, 0, 0.7), rgba(0, 0, 0, 0.7)); */
@@ -366,7 +366,7 @@ function InventoryPage() {
 
             .shop-name-input {
   margin-bottom: 20px;
-  width: 50%;
+  width: 70%;
 }
 
             .title {
@@ -409,6 +409,7 @@ function InventoryPage() {
               margin-bottom: 20px;
               border-radius: 15px;
               box-shadow: 0px 6px 10px rgba(0, 0, 0, 0.2);
+            
             }
 
             .total-container {
@@ -425,7 +426,7 @@ function InventoryPage() {
             /* Responsive Styling */
             @media (max-width: 768px) {
               .inventory-background {
-                height: 100vh;
+                height: 200vh;
                 background-color: #f8f9fa; /* Match desktop background color */
                 padding: 20px;
                 margin-top: 5vh;
