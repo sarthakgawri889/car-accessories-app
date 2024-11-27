@@ -32,11 +32,8 @@ export const recordSale = async (req, res) => {
         totalProfit += profit;
 
         inventoryProduct.quantity -= product.quantity;
-        if (inventoryProduct.quantity === 0) {
-          await Product.findOneAndDelete({ userId, productId: product.productId });
-        } else {
-          await inventoryProduct.save();
-        }
+       
+        await inventoryProduct.save();
 
         return { ...product, profit, paymentStatus: product.paymentStatus || "pending" };
       })
@@ -128,6 +125,17 @@ export const handlePaymentReceived = async (req, res) => {
     // Update payment status
     product.paymentStatus = "received";
     await sale.save();
+
+    const inventoryProduct = await Product.findOne({ productId });
+    if (!inventoryProduct) {
+      return res.status(404).json({ message: "Product not found in inventory" });
+    }
+
+    if (inventoryProduct.quantity === 0) {
+      await Product.findOneAndDelete({ userId, productId: product.productId });
+    } else {
+      await inventoryProduct.save();
+    }
 
     res.status(200).json({ message: "Payment status updated successfully", sale });
   } catch (err) {
