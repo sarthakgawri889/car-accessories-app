@@ -4,6 +4,8 @@ import background from "../assets/download.svg";
 import sellBackground from '../assets/sale.jpeg'
 import inventoryBackground from "../assets/inventory.jpeg";
 import profitsBackground from "../assets/profits.png";
+import expenseBackground from "../assets/expensenamegement.jpeg"
+import trackBackground from "../assets/trackpayment.jpeg"
 import { Box } from "@mui/material";
 import { useNavigate } from "react-router-dom";
 import { CurrentUserContext } from "../context/CurrentUserContext";
@@ -34,6 +36,18 @@ function Homepage() {
       description: "Analyze daily, weekly, and monthly profits",
       path: "/profits",
       background: profitsBackground,
+    },
+    {
+      title: "Track Payments",
+      description: "Track Payments received or not",
+      path: "/trackpay",
+      background: trackBackground,
+    },
+    {
+      title: "Expense Management",
+      description: "Manage your expenses with ease",
+      path: "/expense",
+      background: expenseBackground,
     },
   ];
 
