@@ -17,9 +17,7 @@ import {
   IconButton,
   Typography,
 } from "@mui/material";
-import {
-  CircularProgress,
-} from "@mui/material";
+import { CircularProgress } from "@mui/material";
 import { Edit, Delete } from "@mui/icons-material";
 import { v4 as uuidv4 } from "uuid";
 
@@ -35,7 +33,9 @@ import { jsPDF } from "jspdf";
 function InventoryPage() {
   const [products, setProducts] = useState([]);
   const { currentUser } = useContext(CurrentUserContext);
-  const { refreshProducts,loading } = useContext(ProductContext);
+  const { refreshProducts, loading } = useContext(ProductContext);
+  const [searchQuery, setSearchQuery] = useState(""); // State for search query
+  const [filteredProducts, setFilteredProducts] = useState([]); // State for filtered products
   const [newProduct, setNewProduct] = useState({
     id: "",
     name: "",
@@ -44,7 +44,6 @@ function InventoryPage() {
     vendor: "",
   });
   const [isEditing, setIsEditing] = useState(false);
-
   const [editingProductId, setEditingProductId] = useState(null);
 
   useEffect(() => {
@@ -53,6 +52,15 @@ function InventoryPage() {
       fetchProducts();
     }
   }, [currentUser]);
+
+  useEffect(() => {
+    // Filter products whenever the search query or product list changes
+    setFilteredProducts(
+      products.filter((product) =>
+        product.name.toLowerCase().includes(searchQuery.toLowerCase())
+      )
+    );
+  }, [searchQuery, products]);
 
   const fetchProducts = async () => {
     try {
@@ -67,7 +75,7 @@ function InventoryPage() {
     try {
       const productData = {
         userId: currentUser.sub,
-        productId: isEditing ? editingProductId : uuidv4(), // Generate productId only for new products
+        productId: isEditing ? editingProductId : uuidv4(),
         name: newProduct.name,
         price: parseFloat(newProduct.price),
         quantity: parseInt(newProduct.quantity),
@@ -79,8 +87,8 @@ function InventoryPage() {
       } else {
         await addProduct(productData);
       }
-      refreshProducts(); // Notify ProductContext of changes
-      fetchProducts(); // Refresh the product list
+      refreshProducts();
+      fetchProducts();
       setIsEditing(false);
       setEditingProductId(null);
       setNewProduct({ id: "", name: "", price: "", quantity: "", vendor: "" });
@@ -92,7 +100,7 @@ function InventoryPage() {
   const handleDelete = async (productId) => {
     try {
       await deleteProduct(currentUser.sub, productId);
-      refreshProducts(); // Notify ProductContext of changes
+      refreshProducts();
       fetchProducts();
     } catch (err) {
       console.error("Error deleting product:", err);
@@ -111,13 +119,14 @@ function InventoryPage() {
   };
 
   const calculateTotalStockPrice = () => {
-    return products.reduce(
+    return filteredProducts.reduce(
       (total, product) =>
         total +
         parseFloat(product.price || 0) * parseInt(product.quantity || 0),
       0
     );
   };
+
   if (loading) {
     return (
       <Box display="flex" justifyContent="center" alignItems="center" minHeight="100vh">
@@ -128,26 +137,17 @@ function InventoryPage() {
 
   const handleDownloadPdf = () => {
     const doc = new jsPDF();
-
-    // Set the title of the PDF
     doc.setFontSize(18);
     doc.text("Inventory Report", 14, 10);
-
     const today = new Date();
-    const formattedDate = today.toLocaleDateString("en-GB"); // Format: DD/MM/YYYY
+    const formattedDate = today.toLocaleDateString("en-GB");
     doc.setFontSize(12);
-    doc.text(formattedDate, doc.internal.pageSize.width - 20, 10, { align: "right" });
+    doc.text(formattedDate, doc.internal.pageSize.width - 20, 10, {
+      align: "right",
+    });
 
-
-    // Prepare the data for the table (headers and rows)
-    const headers = [
-      "Product Name",
-      "Price",
-      "Quantity",
-      "Vendor",
-      "Total Price",
-    ];
-    const rows = products.map((product) => [
+    const headers = ["Product Name", "Price", "Quantity", "Vendor", "Total Price"];
+    const rows = filteredProducts.map((product) => [
       product.name,
       `${product.price.toFixed(2)} Rs.`,
       product.quantity.toString(),
@@ -155,33 +155,31 @@ function InventoryPage() {
       `${(product.price * product.quantity).toFixed(2)} Rs.`,
     ]);
 
-    // Apply autoTable to generate the table
     doc.autoTable({
-      head: [headers], // Table headers
-      body: rows, // Table data
-      startY: 20, // Start position for the table
-      theme: "grid", // Apply grid theme (with lines around cells)
+      head: [headers],
+      body: rows,
+      startY: 20,
+      theme: "grid",
       styles: {
-        fontSize: 10, // Font size for the table content
-        cellPadding: 4, // Padding inside cells
-        halign: "center", // Center-align text in cells
+        fontSize: 10,
+        cellPadding: 4,
+        halign: "center",
       },
       headStyles: {
-        fillColor: [33, 150, 243], // Header background color (blue)
-        textColor: [255, 255, 255], // Header text color (white)
-        fontSize: 12, // Header font size
-        fontStyle: "bold", // Bold font for header
+        fillColor: [33, 150, 243],
+        textColor: [255, 255, 255],
+        fontSize: 12,
+        fontStyle: "bold",
       },
       bodyStyles: {
-        fillColor: [242, 242, 242], // Light grey background for rows
-        textColor: [0, 0, 0], // Black text color
+        fillColor: [242, 242, 242],
+        textColor: [0, 0, 0],
       },
       alternateRowStyles: {
-        fillColor: [255, 255, 255], // White background for alternate rows
+        fillColor: [255, 255, 255],
       },
     });
 
-    // Add the total stock price below the table in a larger font
     const totalStockPrice = calculateTotalStockPrice();
     doc.setFontSize(14);
     doc.text(
@@ -190,7 +188,6 @@ function InventoryPage() {
       doc.autoTable.previous.finalY + 10
     );
 
-    // Save the PDF
     doc.save("inventory_report.pdf");
   };
 
@@ -198,11 +195,11 @@ function InventoryPage() {
     <>
       <Box
         sx={{
-          position: "fixed", // Fix it to the top
-          top: 0, // Align to the top of the viewport
-          left: 0, // Align to the left
-          width: "100%", // Full width
-          zIndex: 1100, // Ensure it stays on top of other content
+          position: "fixed",
+          top: 0,
+          left: 0,
+          width: "100%",
+          zIndex: 1100,
         }}
       >
         <ResponsiveAppBar />
@@ -218,6 +215,14 @@ function InventoryPage() {
         </div>
 
         <Box className="form-container">
+          <TextField
+            label="Search Products"
+            variant="outlined"
+            size="small"
+            className="input-field"
+            value={searchQuery}
+            onChange={(e) => setSearchQuery(e.target.value)}
+          />
           <TextField
             label="Product Name"
             name="name"
@@ -274,20 +279,18 @@ function InventoryPage() {
                 <TableCell>Price</TableCell>
                 <TableCell>Quantity</TableCell>
                 <TableCell>Vendor</TableCell>
-                <TableCell>Date</TableCell> {/* Add Date column */}
+                <TableCell>Date</TableCell>
                 <TableCell>Actions</TableCell>
               </TableRow>
             </TableHead>
-
             <TableBody>
-              {products.map((product, index) => (
+              {filteredProducts.map((product, index) => (
                 <TableRow key={index}>
                   <TableCell>{product.name}</TableCell>
                   <TableCell>{product.price}</TableCell>
                   <TableCell>{product.quantity}</TableCell>
                   <TableCell>{product.vendor}</TableCell>
                   <TableCell>
-                    {/* Format the date */}
                     {new Date(product.date).toLocaleDateString("en-IN", {
                       day: "numeric",
                       month: "long",
@@ -313,20 +316,14 @@ function InventoryPage() {
             </TableBody>
           </Table>
         </TableContainer>
-
-        <div className="total-container">
-          <Typography variant="h6" className="total-text">
-            Total Stock Price: ₹{calculateTotalStockPrice()}
+        <Box sx={{ mt: 2, textAlign: "right" }}>
+          <Typography variant="h6" gutterBottom>
+            Total Stock Price: {calculateTotalStockPrice().toFixed(2)} Rs.
           </Typography>
-        </div>
-
-        <Button
-          variant="contained"
-          color="secondary"
-          onClick={handleDownloadPdf}
-        >
-          Download as PDF
-        </Button>
+          <Button variant="contained" color="primary" onClick={handleDownloadPdf}>
+            Download Inventory PDF
+          </Button>
+        </Box>
       </div>
 
       <style>
@@ -439,12 +436,9 @@ function InventoryPage() {
                 text-align: center;
               }
             }
-
-       
-
-
         `}
       </style>
+
     </>
   );
 }
