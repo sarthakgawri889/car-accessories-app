@@ -1,5 +1,5 @@
 import  { useEffect, useState,useContext } from "react";
-import { getSoldProduct, deleteSoldProduct } from "./api";
+import { getSoldProduct, deleteSoldProduct } from "../service/sellapi";
 import { CurrentUserContext } from "../context/CurrentUserContext";
 const SoldProducts = () => {
   const [soldProducts, setSoldProducts] = useState([]);
