@@ -364,6 +364,11 @@ function InventoryPage() {
               margin-bottom: 20px;
             }
 
+            .shop-name-input {
+  margin-bottom: 20px;
+  width: 50%;
+}
+
             .title {
               font-size: 2.5rem;
               font-weight: bold;
@@ -425,6 +430,10 @@ function InventoryPage() {
                 padding: 20px;
                 margin-top: 5vh;
               }
+
+              .shop-name-input {
+    width: 100%;
+  }
 
               .form-container {
                 width: 100%;
