@@ -36,6 +36,7 @@ function InventoryPage() {
   const [products, setProducts] = useState([]);
   const { currentUser } = useContext(CurrentUserContext);
   const { refreshProducts,loading } = useContext(ProductContext);
+  const [searchTerm, setSearchTerm] = useState(""); // State for search input
   const [newProduct, setNewProduct] = useState({
     id: "",
     name: "",
@@ -194,6 +195,10 @@ function InventoryPage() {
     doc.save("inventory_report.pdf");
   };
 
+  const filteredProducts = products.filter((product) =>
+    product.name.toLowerCase().includes(searchTerm.toLowerCase())
+  );
+
   return (
     <>
       <Box
@@ -266,6 +271,15 @@ function InventoryPage() {
           </Button>
         </Box>
 
+        <TextField
+          label="Search Products"
+          fullWidth
+          value={searchTerm}
+          onChange={(e) => setSearchTerm(e.target.value)}
+          className="shop-name-input"
+          placeholder="Search by product name..."
+        />
+
         <TableContainer component={Paper} className="table-container">
           <Table>
             <TableHead>
@@ -280,7 +294,7 @@ function InventoryPage() {
             </TableHead>
 
             <TableBody>
-              {products.map((product, index) => (
+              {filteredProducts.map((product, index) => (
                 <TableRow key={index}>
                   <TableCell>{product.name}</TableCell>
                   <TableCell>{product.price}</TableCell>
