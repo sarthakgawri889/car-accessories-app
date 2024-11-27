@@ -219,8 +219,9 @@ function Homepage() {
 
             .card-container > div {
               flex: 1 1 300px; /* Ensures cards are responsive and maintain their width */
-              max-width: 300px; /* Prevents cards from stretching too wide */
+              max-width: 250px; /* Prevents cards from stretching too wide */
               margin: 10px; /* Adds space around individual cards */
+              min-height:300px;
             }
             .homepage-background {
                 height: 100vh;
@@ -251,7 +252,7 @@ function Homepage() {
               top: 10%;
             }
               .card-container {
-                margin-top: 85vh; /* Change marginTop for mobile devices */
+                margin-top: 90vh; /* Change marginTop for mobile devices */
               }
           }
        `}
