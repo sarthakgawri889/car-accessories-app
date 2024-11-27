@@ -335,19 +335,29 @@ const SellPage = () => {
           Grand Total: {calculateTotal()} Rs.
         </Typography>
 
+
         <div className="action-buttons">
           <Button
             variant="contained"
+            color="secondary"
+            className="clear-cart-button"
+            onClick={handleClearCart}
+            
+          >
+            Clear Cart
+          </Button>
+          <Button
+            variant="contained"
             color="primary"
+            className="sell-button"
             onClick={handleSell}
             disabled={cart.length === 0}
           >
-            Sell Products
-          </Button>
-          <Button variant="outlined" color="secondary" onClick={handleClearCart}>
-            Clear Cart
+            Sell
           </Button>
         </div>
+
+        
       </div>
 
 
