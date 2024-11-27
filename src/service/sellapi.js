@@ -45,3 +45,29 @@ export const handlePaymentReceivedAPI = async (saleId, productId) => {
     throw err;
   }
 };
+export const getSoldProduct = async (userId) => {
+  try {
+    const response = await axios.get(`${BASE_URL}/sales/sold/${userId}`);
+    return response.data;
+  } catch (err) {
+    console.error("Error fetching sold products:", err);
+    throw err;
+  }
+};
+
+/**
+ * Delete a specific sold product.
+ * @param {string} userId - User ID.
+ * @param {string} productId - Product ID.
+ * @returns {Promise<Object>} Axios response promise.
+ */
+export const deleteSoldProduct = async (userId, productId) => {
+  try {
+    const response = await axios.delete(`${BASE_URL}/sales/${userId}/${productId}`);
+    return response.data;
+  } catch (err) {
+    console.error("Error deleting sold product:", err);
+    throw err;
+  }
+};
+
