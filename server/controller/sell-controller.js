@@ -126,7 +126,11 @@ export const handlePaymentReceived = async (req, res) => {
     product.paymentStatus = "received";
     await sale.save();
 
-    const inventoryProduct = await Product.findOne({ productId });
+    const inventoryProduct = await Product.findOne({
+      userId: sale.userId,
+      productId,
+    });
+
     if (!inventoryProduct) {
       return res.status(404).json({ message: "Product not found in inventory" });
     }
