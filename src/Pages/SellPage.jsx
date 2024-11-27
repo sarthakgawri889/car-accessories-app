@@ -25,26 +25,27 @@ import { recordSale } from "../service/sellapi.js"; // Import the API for backen
 const SellPage = () => {
   const { products } = useContext(ProductContext);
   const { refreshSales } = useContext(SalesContext);
-  const { refreshProducts,loading } = useContext(ProductContext);
+  const { refreshProducts, loading } = useContext(ProductContext);
   const { currentUser } = useContext(CurrentUserContext); // Fetch current user details
   const [productss, setProductss] = useState([]);
   const [cart, setCart] = useState([]);
   const [inputs, setInputs] = useState({});
   const [shopName, setShopName] = useState("");
+  const [searchTerm, setSearchTerm] = useState(""); // State for search input
 
-  
-  
   useEffect(() => {
     if (Array.isArray(products) && products.length > 0) {
       setProductss(
-        products.map((product, index) => ({
-          id: index + 1,
-          name: product.name,
-          productId: product.productId,
-          price: product.price,
-          quantityAvailable: product.quantity,
-          vendor: product.vendor,
-        }))
+        products
+          .filter((product) => product.quantity > 0) // Filter products with available quantity > 0
+          .map((product, index) => ({
+            id: index + 1,
+            name: product.name,
+            productId: product.productId,
+            price: product.price,
+            quantityAvailable: product.quantity,
+            vendor: product.vendor,
+          }))
       );
     }
   }, [products]);
@@ -128,7 +129,7 @@ const SellPage = () => {
       alert("Cart is empty! Add products to the cart before selling.");
       return;
     }
-  
+
     const saleData = {
       userId: currentUser?.sub,
       shopName,
@@ -139,7 +140,7 @@ const SellPage = () => {
         price: item.price,
         total: item.total,
         costPrice: productss.find((p) => p.productId === item.productId)?.price,
-        paymentStatus: item.paymentStatus || "pending",// Assuming the original price is the cost price
+        paymentStatus: item.paymentStatus || "pending", // Assuming the original price is the cost price
       })),
       totalAmount: calculateTotal(),
     };
@@ -159,7 +160,6 @@ const SellPage = () => {
       alert("Failed to complete the sale.");
     }
   };
- 
 
   const generatePDF = (data) => {
     const doc = new jsPDF();
@@ -193,20 +193,24 @@ const SellPage = () => {
     doc.save(`${data.shopName}_receipt.pdf`);
   };
 
+  const filteredProducts = productss.filter((product) =>
+    product.name.toLowerCase().includes(searchTerm.toLowerCase())
+  );
+
   return (
     <>
       <div className="sell-page-container">
-      <Box
-  sx={{
-    position: "fixed", // Fix it to the top
-    top: 0, // Align to the top of the viewport
-    left: 0, // Align to the left
-    width: "100%", // Full width
-    zIndex: 1100, // Ensure it stays on top of other content
-  }}
->
-  <ResponsiveAppBar />
-</Box>
+        <Box
+          sx={{
+            position: "fixed",
+            top: 0,
+            left: 0,
+            width: "100%",
+            zIndex: 1100,
+          }}
+        >
+          <ResponsiveAppBar />
+        </Box>
         <Typography variant="h4" gutterBottom className="page-title">
           Sell Products
         </Typography>
@@ -217,6 +221,15 @@ const SellPage = () => {
           value={shopName}
           onChange={(e) => setShopName(e.target.value)}
           className="shop-name-input"
+        />
+
+        <TextField
+          label="Search Products"
+          fullWidth
+          value={searchTerm}
+          onChange={(e) => setSearchTerm(e.target.value)}
+          className="search-bar"
+          placeholder="Search by product name..."
         />
 
         <TableContainer component={Paper} className="table-container">
@@ -233,7 +246,7 @@ const SellPage = () => {
               </TableRow>
             </TableHead>
             <TableBody>
-              {productss.map((product) => (
+              {filteredProducts.map((product) => (
                 <TableRow key={product.productId}>
                   <TableCell>{product.name}</TableCell>
                   <TableCell>{product.quantityAvailable}</TableCell>
@@ -277,244 +290,61 @@ const SellPage = () => {
           </Table>
         </TableContainer>
 
-        <Typography variant="h5" gutterBottom className="cart-title">
+        <Typography variant="h5" gutterBottom>
           Cart
         </Typography>
 
-        {cart.length === 0 ? (
-          <Typography className="empty-cart">Cart is empty!</Typography>
-        ) : (
-          <TableContainer component={Paper} className="cart-table">
-            <Table>
-              <TableHead>
-                <TableRow>
-                  <TableCell>Product Name</TableCell>
-                  <TableCell>Quantity</TableCell>
-                  <TableCell>Price</TableCell>
-                  <TableCell>Total</TableCell>
-                  <TableCell>Actions</TableCell>
+        <TableContainer component={Paper}>
+          <Table>
+            <TableHead>
+              <TableRow>
+                <TableCell>Product Name</TableCell>
+                <TableCell>Quantity</TableCell>
+                <TableCell>Selling Price</TableCell>
+                <TableCell>Total</TableCell>
+                <TableCell>Actions</TableCell>
+              </TableRow>
+            </TableHead>
+            <TableBody>
+              {cart.map((item) => (
+                <TableRow key={item.productId}>
+                  <TableCell>{item.name}</TableCell>
+                  <TableCell>{item.quantity}</TableCell>
+                  <TableCell>{item.price}</TableCell>
+                  <TableCell>{item.total}</TableCell>
+                  <TableCell>
+                    <Button
+                      variant="outlined"
+                      color="secondary"
+                      onClick={() => handleRemoveFromCart(item.productId)}
+                    >
+                      Remove
+                    </Button>
+                  </TableCell>
                 </TableRow>
-              </TableHead>
-              <TableBody>
-                {cart.map((item) => (
-                  <TableRow key={item.productId}>
-                    <TableCell>{item.name}</TableCell>
-                    <TableCell>{item.quantity}</TableCell>
-                    <TableCell>{item.price} Rs.</TableCell>
-                    <TableCell>{item.total} Rs.</TableCell>
-                    <TableCell>
-                      <Button
-                        variant="contained"
-                        color="secondary"
-                        onClick={() => handleRemoveFromCart(item.productId)}
-                      >
-                        Remove
-                      </Button>
-                    </TableCell>
-                  </TableRow>
-                ))}
-              </TableBody>
-            </Table>
-          </TableContainer>
-        )}
+              ))}
+            </TableBody>
+          </Table>
+        </TableContainer>
 
-        <Typography variant="h6" className="total-price">
-          Total Price: {calculateTotal()} Rs.
+        <Typography variant="h6" gutterBottom>
+          Grand Total: {calculateTotal()} Rs.
         </Typography>
 
-        <div className="action-buttons">
-          <Button
-            variant="contained"
-            color="secondary"
-            className="clear-cart-button"
-            onClick={handleClearCart}
-          >
-            Clear Cart
-          </Button>
+        <Box display="flex" gap={2} marginTop={2}>
           <Button
             variant="contained"
             color="primary"
-            className="sell-button"
             onClick={handleSell}
+            disabled={cart.length === 0}
           >
-            Sell
+            Sell Products
           </Button>
-        </div>
+          <Button variant="outlined" color="secondary" onClick={handleClearCart}>
+            Clear Cart
+          </Button>
+        </Box>
       </div>
-      <style>
-        {`
-          .sell-page-container {
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  background-color: #f8f9fa;
-  padding: 20px;
-}
-
-.page-title {
-  margin-top: 14vh;
-  font-size: 2.5rem;
-  font-weight: bold;
-  color: #333;
-  text-align: center;
-}
-
-.shop-name-input {
-  margin-bottom: 20px;
-  width: 50%;
-}
-
-.table-container {
-  width: 80%;
-  margin-top: 20px;
-  background-color: #ffffff;
-  border-radius: 8px;
-  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
-}
-
-.input-field {
-  width: 100%;
-}
-
-.add-to-cart-button {
-  margin-top: 10px;
-}
-
-.cart-title {
-  margin-top: 20px;
-  font-size: 1.8rem;
-  font-weight: bold;
-  color: #444;
-}
-
-.empty-cart {
-  margin-top: 20px;
-  color: #888;
-  font-style: italic;
-}
-
-.cart-table {
-  width: 80%;
-  margin-top: 20px;
-  background-color: #ffffff;
-  border-radius: 8px;
-  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
-}
-
-.total-price {
-  margin-top: 20px;
-  font-size: 1.5rem;
-  font-weight: bold;
-  color: #444;
-}
-
-.action-buttons {
-  margin-top: 20px;
-  display: flex;
-  justify-content: space-between;
-  width: 60%;
-  margin-bottom: 30px;
-}
-
-.clear-cart-button,
-.sell-button {
-  width: 48%;
-  border-radius: 6px;
-}
-
-.clear-cart-button {
-  background-color: #ffc107;
-  color: #fff;
-}
-
-.sell-button {
-  background-color: #28a745;
-  color: #fff;
-}
-
-/* Button hover effects */
-.clear-cart-button:hover {
-  background-color: #e0a800;
-}
-
-.sell-button:hover {
-  background-color: #218838;
-}
-
-/* Mobile-friendly styles */
-@media (max-width: 768px) {
-  .page-title {
-    font-size: 2rem;
-  }
-
-  .shop-name-input {
-    width: 100%;
-  }
-
-  .table-container {
-    width: 100%;
-  }
-
-  .cart-title {
-    font-size: 1.5rem;
-    text-align: center;
-  }
-
-  .cart-table {
-    width: 100%;
-  }
-
-  .total-price {
-    font-size: 1.3rem;
-    text-align: center;
-    color: #444;
-  }
-
-  .action-buttons {
-    flex-direction: column;
-    width: 100%;
-    margin-bottom: 10px;
-  }
-
-  .clear-cart-button,
-  .sell-button {
-    width: 100%;
-    margin-bottom: 10px;
-  }
-}
-
-/* General improvements for readability */
-body {
-  font-family: Arial, sans-serif;
-}
-
-table {
-  width: 100%;
-  border-collapse: collapse;
-}
-
-th,
-td {
-  text-align: left;
-  padding: 12px;
-  border-bottom: 1px solid #ddd;
-}
-
-th {
-  background-color: #f5f5f5;
-  color: #333;
-}
-
-td {
-  color: #555;
-}
-
-tr:hover {
-  background-color: #f9f9f9;
-}
-
-       ` }
-      </style>
     </>
   );
 };
