@@ -1,6 +1,6 @@
 import Sale from "../model/Sell.js";
 import Product from "../model/Product.js"; 
-
+import SoldProduct from "../model/SoldProduct.js";
 export const recordSale = async (req, res) => {
   try {
     const { userId, shopName, products, totalAmount } = req.body;
@@ -129,6 +129,8 @@ export const handlePaymentReceived = async (req, res) => {
     product.paymentStatus = "received";
     await sale.save();
 
+    
+
     // Check and delete the product from inventory if payment is now received
     const inventoryProduct = await Product.findOne({ 
       userId: sale.userId, 
@@ -141,6 +143,17 @@ export const handlePaymentReceived = async (req, res) => {
 
     // Delete the product only if its quantity is zero
     if (inventoryProduct.quantity === 0) {
+      const soldProduct = new SoldProduct({
+        userId: inventoryProduct.userId,
+        productId: inventoryProduct.productId,
+        name: inventoryProduct.name,
+        price: inventoryProduct.price,
+        vendor: inventoryProduct.vendor,
+        date: Date.now(), // Include date if needed
+      });
+
+      // Save the sold product
+      await soldProduct.save();
       await Product.deleteOne({ userId: sale.userId, productId });
     }
 
