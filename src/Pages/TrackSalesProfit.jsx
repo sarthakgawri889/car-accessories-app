@@ -129,7 +129,11 @@ const groupSalesByPeriod = (sales, period) => {
   const generatePDF = () => {
     const doc = new jsPDF();
     let yPosition = 20; // Starting position for the content
-  
+    const today = new Date();
+    const formattedDate = today.toLocaleDateString("en-GB"); // Format: DD/MM/YYYY
+    doc.setFontSize(12);
+    doc.text(formattedDate, doc.internal.pageSize.width - 20, 10, { align: "right" });
+
     doc.text("Sales and Profit Report", 14, yPosition);
     yPosition += 10;
   

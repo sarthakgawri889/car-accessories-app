@@ -133,6 +133,12 @@ function InventoryPage() {
     doc.setFontSize(18);
     doc.text("Inventory Report", 14, 10);
 
+    const today = new Date();
+    const formattedDate = today.toLocaleDateString("en-GB"); // Format: DD/MM/YYYY
+    doc.setFontSize(12);
+    doc.text(formattedDate, doc.internal.pageSize.width - 20, 10, { align: "right" });
+
+
     // Prepare the data for the table (headers and rows)
     const headers = [
       "Product Name",

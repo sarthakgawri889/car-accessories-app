@@ -114,7 +114,11 @@ const ExpenseSummary = () => {
   const generatePDF = () => {
     const doc = new jsPDF();
     let yPosition = 20;
-  
+    const today = new Date();
+    const formattedDate = today.toLocaleDateString("en-GB"); // Format: DD/MM/YYYY
+    doc.setFontSize(12);
+    doc.text(formattedDate, doc.internal.pageSize.width - 20, 10, { align: "right" });
+
     doc.text("Expense Summary Report", 14, yPosition);
     yPosition += 10;
   

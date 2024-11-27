@@ -168,6 +168,10 @@ const SellPage = () => {
     doc.setFontSize(14);
     doc.text(`Shop Name: ${data.shopName}`, 10, 20);
     doc.text(`Sold By: ${currentUser?.name || "Unknown User"}`, 10, 30);
+    const today = new Date();
+    const formattedDate = today.toLocaleDateString("en-GB"); // Format: DD/MM/YYYY
+    doc.setFontSize(12);
+    doc.text(formattedDate, doc.internal.pageSize.width - 20, 10, { align: "right" });
 
     const tableColumn = ["Product Name", "Quantity", "Price", "Total"];
     const tableRows = data.products.map((item) => [
