@@ -119,6 +119,15 @@ function InventoryPage() {
       0
     );
   };
+
+  const calculateTotalItems = () => {
+    return products.reduce(
+      (tot, product) =>
+        tot +
+       parseInt(product.quantity || 0),
+      0
+    );
+  };
   if (loading) {
     return (
       <Box display="flex" justifyContent="center" alignItems="center" minHeight="100vh">
@@ -327,6 +336,12 @@ function InventoryPage() {
             </TableBody>
           </Table>
         </TableContainer>
+
+        <div className="total-container">
+          <Typography variant="h6" className="total-text">
+            Total Items: {calculateTotalItems()}
+          </Typography>
+        </div>
 
         <div className="total-container">
           <Typography variant="h6" className="total-text">
