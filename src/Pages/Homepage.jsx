@@ -249,7 +249,7 @@ function Homepage() {
               height: 100%;
             }
             .message-container {
-              top: 10%;
+              top: 5%;
             }
               .card-container {
                 margin-top: 90vh; /* Change marginTop for mobile devices */
