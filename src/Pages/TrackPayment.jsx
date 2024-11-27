@@ -1,4 +1,4 @@
-import  { useContext, useState } from "react";
+import { useContext, useState } from "react";
 import { SalesContext } from "../context/SalesContext";
 import {
   Typography,
@@ -28,7 +28,12 @@ const TrackPayment = () => {
   const [selectedDate, setSelectedDate] = useState(dayjs()); // Default to today's date
   if (loading) {
     return (
-      <Box display="flex" justifyContent="center" alignItems="center" minHeight="100vh">
+      <Box
+        display="flex"
+        justifyContent="center"
+        alignItems="center"
+        minHeight="100vh"
+      >
         <CircularProgress />
       </Box>
     );
@@ -64,8 +69,6 @@ const TrackPayment = () => {
     dayjs(sale.date).isSame(selectedDate, "day")
   );
 
-  
-
   return (
     <>
       <Box
@@ -79,13 +82,19 @@ const TrackPayment = () => {
       >
         <ResponsiveAppBar />
       </Box>
-      <Box sx={{ p: { xs: 2, sm: 3 }, maxWidth: "1200px", margin: "7vh auto",backgroundColor: "white" }}>
+      <Box
+        sx={{
+          p: { xs: 2, sm: 3 },
+          maxWidth: "1200px",
+          margin: "7vh auto",
+          backgroundColor: "white",
+        }}
+      >
         <Typography
           variant="h4"
           align="center"
           gutterBottom
           sx={{ fontSize: { xs: "1.5rem", sm: "2.125rem" }, color: "black" }}
-
         >
           Track Payments
         </Typography>
@@ -101,28 +110,55 @@ const TrackPayment = () => {
         </Box>
 
         {filteredSales.length === 0 ? (
-          <Typography variant="h6" align="center" color="textSecondary" sx={{ mt: 4 }}>
+          <Typography
+            variant="h6"
+            align="center"
+            color="textSecondary"
+            sx={{ mt: 4 }}
+          >
             No sales data available for the selected date.
           </Typography>
         ) : (
           <Grid container spacing={3}>
             {filteredSales.map((sale) => (
               <Grid item xs={12} key={sale._id}>
-                <Box sx={{ mb: 3, pb: 2, borderBottom: "1px solid #e0e0e0", p: { xs: 2, sm: 3 } }}>
+                <Box
+                  sx={{
+                    mb: 3,
+                    pb: 2,
+                    borderBottom: "1px solid #e0e0e0",
+                    p: { xs: 2, sm: 3 },
+                  }}
+                >
                   <Typography variant="h6" color="primary">
-                    Shop Name: {sale.shopName} | Date: {dayjs(sale.date).format("DD/MM/YYYY")}
+                    Shop Name: {sale.shopName} | Date:{" "}
+                    {dayjs(sale.date).format("HH:mm:ss")}
                   </Typography>
                   <TableContainer component={Paper} sx={{ mt: 2 }}>
                     <Table size="small">
                       <TableHead>
                         <TableRow>
-                          <TableCell><strong>Product Name</strong></TableCell>
-                          <TableCell><strong>Quantity</strong></TableCell>
-                          <TableCell><strong>Price (Rs.)</strong></TableCell>
-                          <TableCell><strong>Total (Rs.)</strong></TableCell>
-                          <TableCell><strong>Profit (Rs.)</strong></TableCell>
-                          <TableCell><strong>Payment Status</strong></TableCell>
-                          <TableCell><strong>Actions</strong></TableCell>
+                          <TableCell>
+                            <strong>Product Name</strong>
+                          </TableCell>
+                          <TableCell>
+                            <strong>Quantity</strong>
+                          </TableCell>
+                          <TableCell>
+                            <strong>Price (Rs.)</strong>
+                          </TableCell>
+                          <TableCell>
+                            <strong>Total (Rs.)</strong>
+                          </TableCell>
+                          <TableCell>
+                            <strong>Profit (Rs.)</strong>
+                          </TableCell>
+                          <TableCell>
+                            <strong>Payment Status</strong>
+                          </TableCell>
+                          <TableCell>
+                            <strong>Actions</strong>
+                          </TableCell>
                         </TableRow>
                       </TableHead>
                       <TableBody>
@@ -130,52 +166,74 @@ const TrackPayment = () => {
                           <TableRow key={product.productId}>
                             <TableCell>{product.name}</TableCell>
                             <TableCell>{product.quantity}</TableCell>
-                            <TableCell>Rs. {product.price.toFixed(2)}</TableCell>
-                            <TableCell>Rs. {product.total.toFixed(2)}</TableCell>
-                            <TableCell>Rs. {product.profit.toFixed(2)}</TableCell>
+                            <TableCell>
+                              Rs. {product.price.toFixed(2)}
+                            </TableCell>
+                            <TableCell>
+                              Rs. {product.total.toFixed(2)}
+                            </TableCell>
+                            <TableCell>
+                              Rs. {product.profit.toFixed(2)}
+                            </TableCell>
                             <TableCell>{product.paymentStatus}</TableCell>
                             <TableCell>
-  {product.paymentStatus === "pending" && (
-    <Box
-      sx={{
-        display: "flex",
-        flexDirection: { xs: "column", sm: "row" }, // Stack vertically on small screens
-        alignItems: { xs: "stretch", sm: "center" }, // Full width for mobile
-        gap: 1, // Space between buttons
-        
-      }}
-    >
-      <Button
-        size="small"
-        variant="outlined"
-        color="secondary"
-        disabled={updating}
-        onClick={() => handleReturn(sale._id, product.productId)}
-        sx={{
-          fontSize: { xs: "0.75rem", sm: "0.875rem" }, // Smaller font for mobile
-          padding: { xs: "6px 8px", sm: "8px 16px" },
-         
-        }}
-      >
-        Returned
-      </Button>
-      <Button
-        size="small"
-        variant="contained"
-        color="primary"
-        disabled={updating}
-        onClick={() => handlePaymentReceived(sale._id, product.productId)}
-        sx={{
-          fontSize: { xs: "0.75rem", sm: "0.875rem" }, // Smaller font for mobile
-          padding: { xs: "6px 8px", sm: "8px 16px" }, // Compact padding for mobile
-        }}
-      >
-        Payment Received
-      </Button>
-    </Box>
-  )}
-</TableCell>
-
+                              {product.paymentStatus === "pending" && (
+                                <Box
+                                  sx={{
+                                    display: "flex",
+                                    flexDirection: { xs: "column", sm: "row" }, // Stack vertically on small screens
+                                    alignItems: { xs: "stretch", sm: "center" }, // Full width for mobile
+                                    gap: 1, // Space between buttons
+                                  }}
+                                >
+                                  <Button
+                                    size="small"
+                                    variant="outlined"
+                                    color="secondary"
+                                    disabled={updating}
+                                    onClick={() =>
+                                      handleReturn(sale._id, product.productId)
+                                    }
+                                    sx={{
+                                      fontSize: {
+                                        xs: "0.75rem",
+                                        sm: "0.875rem",
+                                      }, // Smaller font for mobile
+                                      padding: {
+                                        xs: "6px 8px",
+                                        sm: "8px 16px",
+                                      },
+                                    }}
+                                  >
+                                    Returned
+                                  </Button>
+                                  <Button
+                                    size="small"
+                                    variant="contained"
+                                    color="primary"
+                                    disabled={updating}
+                                    onClick={() =>
+                                      handlePaymentReceived(
+                                        sale._id,
+                                        product.productId
+                                      )
+                                    }
+                                    sx={{
+                                      fontSize: {
+                                        xs: "0.75rem",
+                                        sm: "0.875rem",
+                                      }, // Smaller font for mobile
+                                      padding: {
+                                        xs: "6px 8px",
+                                        sm: "8px 16px",
+                                      }, // Compact padding for mobile
+                                    }}
+                                  >
+                                    Payment Received
+                                  </Button>
+                                </Box>
+                              )}
+                            </TableCell>
                           </TableRow>
                         ))}
                       </TableBody>
