@@ -1,27 +1,27 @@
 import  { useEffect, useState,useContext } from "react";
 import { getSoldProduct, deleteSoldProduct } from "../service/sellapi";
-import { CurrentUserContext } from "../context/CurrentUserContext";
+import { ProductContext } from "../context/ProductContext";
 const SoldProducts = () => {
   const [soldProducts, setSoldProducts] = useState([]);
-  const { currentUser } = useContext(CurrentUserContext);
+  const { products } = useContext(ProductContext);
 
   // Fetch sold products
   useEffect(() => {
     const fetchSales = async () => {
       try {
-        const { data } = await getSoldProduct(currentUser.sub);
+        const { data } = await getSoldProduct(products?.userId);
         setSoldProducts(data);
       } catch (err) {
         console.error("Error fetching sales:", err);
       }
     };
     fetchSales();
-  }, [currentUser]);
+  }, [products]);
 
   // Handle delete
   const handleDelete = async (productId) => {
     try {
-      await deleteSoldProduct(currentUser.sub, productId);
+      await deleteSoldProduct(products?.userId, productId);
       setSoldProducts(soldProducts.filter((product) => product.productId !== productId));
     } catch (err) {
       console.error("Error deleting product:", err);
