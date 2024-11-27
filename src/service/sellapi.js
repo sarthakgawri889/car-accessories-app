@@ -47,7 +47,7 @@ export const handlePaymentReceivedAPI = async (saleId, productId) => {
 };
 export const getSoldProduct = async (userId) => {
   try {
-    const response = await axios.get(`${BASE_URL}/sales/sold/${userId}`);
+    const response = await axios.get(`${BASE_URL}/sales/${userId}/sold-products`);
     return response.data;
   } catch (err) {
     console.error("Error fetching sold products:", err);

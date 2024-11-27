@@ -12,7 +12,7 @@ selroute.put("/return", handleReturn);
 // Route to update payment received status
 selroute.put("/payment-received", handlePaymentReceived);
 
-selroute.get("/sold/:userId", getSoldProduct);
+selroute.get("/:userId/sold-products", getSoldProduct);
 
 /**
  * Route: Delete a specific sold product

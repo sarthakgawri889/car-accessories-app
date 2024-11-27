@@ -10,13 +10,7 @@ const app = express();
 const PORT = process.env.PORT || 8000;
 
 // Apply CORS middleware before defining routes
-app.use(
-  cors({
-    origin: ['https://expertcaraccessories.netlify.app'], // Allow only your frontend domain
-    methods: ['GET', 'POST', 'PUT', 'DELETE'],
-    credentials: true, // Include cookies/authorization headers if needed
-  })
-); // Allow requests from all origins
+app.use(cors()); // Allow requests from all origins
 
 app.use(bodyParser.json({extended: true}));
 app.use(bodyParser.urlencoded({extended:true}));
