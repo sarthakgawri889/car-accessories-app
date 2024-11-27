@@ -121,7 +121,7 @@ function InventoryPage() {
   };
 
   const calculateTotalItems = () => {
-    return products.reduce(
+    return filteredProducts.reduce(
       (tot, product) =>
         tot +
        parseInt(product.quantity || 0),
