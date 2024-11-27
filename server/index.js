@@ -6,6 +6,7 @@ import bodyParser from 'body-parser';
 import prodroute from './routes/product-route.js';
 import sellRoutes from "./routes/sellroute.js";
 import expenseRoutes from './routes/exp-route.js'
+import soldroute from './routes/sold-route.js';
 const app = express();
 const PORT = process.env.PORT || 8000;
 
@@ -20,6 +21,7 @@ app.use(bodyParser.urlencoded({extended:true}));
 app.use('/', route);
 app.use("/api/products", prodroute);
 app.use("/api/sales", sellRoutes);
+app.use("/api/sold", soldroute);
 app.use('/api/expenses', expenseRoutes); // Use the sale routes here
 
 app.get("/", (req, res) => {
