@@ -345,6 +345,181 @@ const SellPage = () => {
           </Button>
         </Box>
       </div>
+
+      <style>
+        {`
+          .sell-page-container {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  background-color: #f8f9fa;
+  padding: 20px;
+}
+
+.page-title {
+  margin-top: 14vh;
+  font-size: 2.5rem;
+  font-weight: bold;
+  color: #333;
+  text-align: center;
+}
+
+.shop-name-input {
+  margin-bottom: 20px;
+  width: 50%;
+}
+
+.table-container {
+  width: 80%;
+  margin-top: 20px;
+  background-color: #ffffff;
+  border-radius: 8px;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+}
+
+.input-field {
+  width: 100%;
+}
+
+.add-to-cart-button {
+  margin-top: 10px;
+}
+
+.cart-title {
+  margin-top: 20px;
+  font-size: 1.8rem;
+  font-weight: bold;
+  color: #444;
+}
+
+.empty-cart {
+  margin-top: 20px;
+  color: #888;
+  font-style: italic;
+}
+
+.cart-table {
+  width: 80%;
+  margin-top: 20px;
+  background-color: #ffffff;
+  border-radius: 8px;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+}
+
+.total-price {
+  margin-top: 20px;
+  font-size: 1.5rem;
+  font-weight: bold;
+  color: #444;
+}
+
+.action-buttons {
+  margin-top: 20px;
+  display: flex;
+  justify-content: space-between;
+  width: 60%;
+  margin-bottom: 30px;
+}
+
+.clear-cart-button,
+.sell-button {
+  width: 48%;
+  border-radius: 6px;
+}
+
+.clear-cart-button {
+  background-color: #ffc107;
+  color: #fff;
+}
+
+.sell-button {
+  background-color: #28a745;
+  color: #fff;
+}
+
+/* Button hover effects */
+.clear-cart-button:hover {
+  background-color: #e0a800;
+}
+
+.sell-button:hover {
+  background-color: #218838;
+}
+
+/* Mobile-friendly styles */
+@media (max-width: 768px) {
+  .page-title {
+    font-size: 2rem;
+  }
+
+  .shop-name-input {
+    width: 100%;
+  }
+
+  .table-container {
+    width: 100%;
+  }
+
+  .cart-title {
+    font-size: 1.5rem;
+    text-align: center;
+  }
+
+  .cart-table {
+    width: 100%;
+  }
+
+  .total-price {
+    font-size: 1.3rem;
+    text-align: center;
+    color: #444;
+  }
+
+  .action-buttons {
+    flex-direction: column;
+    width: 100%;
+    margin-bottom: 10px;
+  }
+
+  .clear-cart-button,
+  .sell-button {
+    width: 100%;
+    margin-bottom: 10px;
+  }
+}
+
+/* General improvements for readability */
+body {
+  font-family: Arial, sans-serif;
+}
+
+table {
+  width: 100%;
+  border-collapse: collapse;
+}
+
+th,
+td {
+  text-align: left;
+  padding: 12px;
+  border-bottom: 1px solid #ddd;
+}
+
+th {
+  background-color: #f5f5f5;
+  color: #333;
+}
+
+td {
+  color: #555;
+}
+
+tr:hover {
+  background-color: #f9f9f9;
+}
+
+       ` }
+      </style>
     </>
   );
 };
