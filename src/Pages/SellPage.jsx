@@ -228,7 +228,7 @@ const SellPage = () => {
           fullWidth
           value={searchTerm}
           onChange={(e) => setSearchTerm(e.target.value)}
-          className="search-bar"
+          className="shop-name-input"
           placeholder="Search by product name..."
         />
 
@@ -290,11 +290,15 @@ const SellPage = () => {
           </Table>
         </TableContainer>
 
-        <Typography variant="h5" gutterBottom>
+        <Typography variant="h5" gutterBottom className="cart-title">
           Cart
         </Typography>
 
-        <TableContainer component={Paper}>
+        {cart.length === 0 ? (
+          <Typography className="empty-cart">Cart is empty!</Typography>
+        ) : (
+
+        <TableContainer component={Paper} className="cart-table">
           <Table>
             <TableHead>
               <TableRow>
@@ -326,12 +330,12 @@ const SellPage = () => {
             </TableBody>
           </Table>
         </TableContainer>
-
+        )}
         <Typography variant="h6" gutterBottom>
           Grand Total: {calculateTotal()} Rs.
         </Typography>
 
-        <Box display="flex" gap={2} marginTop={2}>
+        <div className="action-buttons">
           <Button
             variant="contained"
             color="primary"
@@ -343,8 +347,9 @@ const SellPage = () => {
           <Button variant="outlined" color="secondary" onClick={handleClearCart}>
             Clear Cart
           </Button>
-        </Box>
+        </div>
       </div>
+
 
       <style>
         {`
