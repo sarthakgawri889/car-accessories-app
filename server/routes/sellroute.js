@@ -1,5 +1,5 @@
 import express from "express";
-import { getSales, recordSale,handleReturn,handlePaymentReceived,getSoldProduct,deleteSoldProduct } from "../controller/sell-controller.js";
+import { getSales, recordSale,handleReturn,handlePaymentReceived } from "../controller/sell-controller.js";
 
 const selroute = express.Router();
 

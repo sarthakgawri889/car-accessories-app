@@ -7,8 +7,11 @@ import prodroute from './routes/product-route.js';
 import sellRoutes from "./routes/sellroute.js";
 import expenseRoutes from './routes/exp-route.js'
 import soldroute from './routes/sold-route.js';
-const app = express();
+const app = express(); 
 const PORT = process.env.PORT || 8000;
+import { EventEmitter } from "events";
+EventEmitter.defaultMaxListeners = 20; // Increase as needed
+
 
 // Apply CORS middleware before defining routes
 app.use(cors()); // Allow requests from all origins

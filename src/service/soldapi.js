@@ -1,13 +1,13 @@
 import axios from "axios";
 
 // Base URL of your backend API
-// const BASE_URL= 'http://localhost:8000/api'
-const BASE_URL = `${import.meta.env.VITE_API_URL}/api`; // Replace with your actual backend URL
+// const BASE_URL= 'http://localhost:8000/api/sold'
+const BASE_URL = `${import.meta.env.VITE_API_URL}/api/sold`; // Replace with your actual backend URL
 
 
 export const getSoldProduct = async (userId) => {
     try {
-      const response = await axios.get(`${BASE_URL}/sold/${userId}`);
+      const response = await axios.get(`${BASE_URL}/${userId}`);
       return response.data;
     } catch (err) {
       console.error("Error fetching sold products:", err);
@@ -23,7 +23,7 @@ export const getSoldProduct = async (userId) => {
    */
   export const deleteSoldProduct = async (userId, productId) => {
     try {
-      const response = await axios.delete(`${BASE_URL}/sold/${userId}/${productId}`);
+      const response = await axios.delete(`${BASE_URL}/${userId}/${productId}`);
       return response.data;
     } catch (err) {
       console.error("Error deleting sold product:", err);
