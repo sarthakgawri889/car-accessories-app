@@ -112,7 +112,7 @@ function InventoryPage() {
   };
 
   const calculateTotalStockPrice = () => {
-    return products.reduce(
+    return filteredProducts.reduce(
       (total, product) =>
         total +
         parseFloat(product.price || 0) * parseInt(product.quantity || 0),
@@ -161,7 +161,7 @@ function InventoryPage() {
       "Vendor",
       "Total Price",
     ];
-    const rows = products.map((product) => [
+    const rows = filteredProducts.map((product) => [
       product.name,
       `${product.price.toFixed(2)} Rs.`,
       product.quantity.toString(),
@@ -194,6 +194,14 @@ function InventoryPage() {
         fillColor: [255, 255, 255], // White background for alternate rows
       },
     });
+
+    const totalStockRows = calculateTotalRows();
+    doc.setFontSize(14);
+    doc.text(
+      `Total Stock Price: ${totalStockRows.toFixed(2)}`,
+      14,
+      doc.autoTable.previous.finalY + 10
+    );
 
     const totalStockItems = calculateTotalItems();
     doc.setFontSize(14);
