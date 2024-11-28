@@ -205,8 +205,10 @@ function InventoryPage() {
   };
 
   const filteredProducts = products.filter((product) =>
-    product.name.toLowerCase().includes(searchTerm.toLowerCase())
+    product.name.toLowerCase().includes(searchTerm.toLowerCase()) || 
+    product.vendor.toLowerCase().includes(searchTerm.toLowerCase())
   );
+  
 
   return (
     <>
@@ -281,12 +283,12 @@ function InventoryPage() {
         </Box>
 
         <TextField
-          label="Search Products"
+          label="Search Products or Vendors"
           fullWidth
           value={searchTerm}
           onChange={(e) => setSearchTerm(e.target.value)}
           className="shop-name-input"
-          placeholder="Search by product name..."
+          placeholder="Search by product name or vendor..."
         />
 
         <TableContainer component={Paper} className="table-container">
