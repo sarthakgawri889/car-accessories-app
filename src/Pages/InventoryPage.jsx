@@ -128,6 +128,10 @@ function InventoryPage() {
       0
     );
   };
+
+  const calculateTotalRows = () => {
+    return filteredProducts.length;
+  };
   if (loading) {
     return (
       <Box display="flex" justifyContent="center" alignItems="center" minHeight="100vh">
@@ -190,6 +194,14 @@ function InventoryPage() {
         fillColor: [255, 255, 255], // White background for alternate rows
       },
     });
+
+    const totalStockItems = calculateTotalItems();
+    doc.setFontSize(14);
+    doc.text(
+      `Total Stock Price: ${totalStockItems.toFixed(2)}`,
+      14,
+      doc.autoTable.previous.finalY + 10
+    );
 
     // Add the total stock price below the table in a larger font
     const totalStockPrice = calculateTotalStockPrice();
@@ -338,6 +350,12 @@ function InventoryPage() {
             </TableBody>
           </Table>
         </TableContainer>
+
+        <div className="total-container">
+          <Typography variant="h6" className="total-text">
+            Total Rows: {calculateTotalRows()}
+          </Typography>
+        </div>
 
         <div className="total-container">
           <Typography variant="h6" className="total-text">
