@@ -198,7 +198,7 @@ function InventoryPage() {
     const totalStockRows = calculateTotalRows();
     doc.setFontSize(14);
     doc.text(
-      `Total Stock Price: ${totalStockRows.toFixed(2)}`,
+      `Total Stock Rows: ${totalStockRows.toFixed(2)}`,
       14,
       doc.autoTable.previous.finalY + 10
     );
@@ -206,7 +206,7 @@ function InventoryPage() {
     const totalStockItems = calculateTotalItems();
     doc.setFontSize(14);
     doc.text(
-      `Total Stock Price: ${totalStockItems.toFixed(2)}`,
+      `Total Stock Items: ${totalStockItems.toFixed(2)}`,
       14,
       doc.autoTable.previous.finalY + 20
     );
