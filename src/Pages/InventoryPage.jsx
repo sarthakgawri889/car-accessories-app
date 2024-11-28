@@ -208,7 +208,7 @@ function InventoryPage() {
     doc.text(
       `Total Stock Price: ${totalStockItems.toFixed(2)}`,
       14,
-      doc.autoTable.previous.finalY + 10
+      doc.autoTable.previous.finalY + 20
     );
 
     // Add the total stock price below the table in a larger font
@@ -217,7 +217,7 @@ function InventoryPage() {
     doc.text(
       `Total Stock Price: ${totalStockPrice.toFixed(2)} Rs.`,
       14,
-      doc.autoTable.previous.finalY + 10
+      doc.autoTable.previous.finalY + 30
     );
 
     // Save the PDF
