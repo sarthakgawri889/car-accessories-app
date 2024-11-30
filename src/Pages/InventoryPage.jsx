@@ -227,7 +227,7 @@ function InventoryPage() {
   const filteredProducts = products.filter((product) =>
     product.name.toLowerCase().includes(searchTerm.toLowerCase()) || 
     product.vendor.toLowerCase().includes(searchTerm.toLowerCase())
-  );
+  ).filter((product) => product.quantity > 0);
   
 
   return (
