@@ -131,8 +131,7 @@ const TrackPayment = () => {
                   }}
                 >
                   <Typography variant="h6" color="primary">
-                    Shop Name: {sale.shopName} | Time:{" "}
-                    {dayjs(sale.date).format("HH:mm:ss")}
+                    Shop Name: {sale.shopName}
                   </Typography>
                   <TableContainer component={Paper} sx={{ mt: 2 }}>
                     <Table size="small">
