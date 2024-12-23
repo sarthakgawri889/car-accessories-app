@@ -233,7 +233,7 @@ const SellPage = () => {
         fullWidth
         value={saleDate}
         onChange={(e) => setSaleDate(e.target.value)}
-        className="sale-date-input"
+        className="shop-name-input"
         InputLabelProps={{ shrink: true }}
       />
 
