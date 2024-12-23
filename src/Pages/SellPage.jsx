@@ -32,6 +32,8 @@ const SellPage = () => {
   const [inputs, setInputs] = useState({});
   const [shopName, setShopName] = useState("");
   const [searchTerm, setSearchTerm] = useState(""); // State for search input
+  const [saleDate, setSaleDate] = useState(""); // State for sale date
+
 
   useEffect(() => {
     if (Array.isArray(products) && products.length > 0) {
@@ -143,6 +145,7 @@ const SellPage = () => {
         paymentStatus: item.paymentStatus || "pending", // Assuming the original price is the cost price
       })),
       totalAmount: calculateTotal(),
+      saleDate, 
     };
 
     try {
@@ -154,6 +157,7 @@ const SellPage = () => {
       setCart([]);
       setInputs({});
       setShopName("");
+      setSaleDate(""); // Reset sale date
       generatePDF(saleData); // Generate PDF receipt
     } catch (error) {
       console.error("Error during sale:", error);
@@ -222,6 +226,16 @@ const SellPage = () => {
           onChange={(e) => setShopName(e.target.value)}
           className="shop-name-input"
         />
+
+      <TextField
+        label="Sale Date"
+        type="date" // Date input type
+        fullWidth
+        value={saleDate}
+        onChange={(e) => setSaleDate(e.target.value)}
+        className="sale-date-input"
+        InputLabelProps={{ shrink: true }}
+      />
 
         <TextField
           label="Search Products"
