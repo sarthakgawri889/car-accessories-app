@@ -4,7 +4,6 @@ import SoldProduct from "../model/SoldProduct.js";
 export const recordSale = async (req, res) => {
   try {
     const { userId, shopName, products, totalAmount, saleDate } = req.body;
-    console.log(saleDate)
     if (!shopName || !products || !Array.isArray(products) || products.length === 0) {
       return res.status(400).json({ message: "Invalid sale data provided" });
     }
@@ -45,7 +44,7 @@ export const recordSale = async (req, res) => {
       products: updatedProducts,
       totalAmount,
       totalProfit,
-      saleDate: saleDate || Date.now(),
+      date: saleDate ? new Date(saleDate) : Date.now()
     });
 
     await sale.save();
