@@ -156,6 +156,90 @@ function InventoryPage() {
     // Prepare the data for the table (headers and rows)
     const headers = [
       "Product Name",
+      "Price",
+      "Quantity",
+      "Vendor",
+      "Total Price",
+    ];
+    const rows = filteredProducts.map((product) => [
+      product.name,
+      `${product.price.toFixed(2)} Rs.`,
+      product.quantity.toString(),
+      product.vendor,
+      `${(product.price * product.quantity).toFixed(2)} Rs.`,
+    ]);
+
+    // Apply autoTable to generate the table
+    doc.autoTable({
+      head: [headers], // Table headers
+      body: rows, // Table data
+      startY: 20, // Start position for the table
+      theme: "grid", // Apply grid theme (with lines around cells)
+      styles: {
+        fontSize: 10, // Font size for the table content
+        cellPadding: 4, // Padding inside cells
+        halign: "center", // Center-align text in cells
+      },
+      headStyles: {
+        fillColor: [33, 150, 243], // Header background color (blue)
+        textColor: [255, 255, 255], // Header text color (white)
+        fontSize: 12, // Header font size
+        fontStyle: "bold", // Bold font for header
+      },
+      bodyStyles: {
+        fillColor: [242, 242, 242], // Light grey background for rows
+        textColor: [0, 0, 0], // Black text color
+      },
+      alternateRowStyles: {
+        fillColor: [255, 255, 255], // White background for alternate rows
+      },
+    });
+
+    const totalStockRows = calculateTotalRows();
+    doc.setFontSize(14);
+    doc.text(
+      `Total Stock Rows: ${totalStockRows.toFixed(2)}`,
+      14,
+      doc.autoTable.previous.finalY + 10
+    );
+
+    const totalStockItems = calculateTotalItems();
+    doc.setFontSize(14);
+    doc.text(
+      `Total Stock Items: ${totalStockItems.toFixed(2)}`,
+      14,
+      doc.autoTable.previous.finalY + 20
+    );
+
+     Add the total stock price below the table in a larger font
+    const totalStockPrice = calculateTotalStockPrice();
+    doc.setFontSize(14);
+    doc.text(
+      `Total Stock Price: ${totalStockPrice.toFixed(2)} Rs.`,
+      14,
+      doc.autoTable.previous.finalY + 30
+   );
+
+    // Save the PDF
+    doc.save("inventory_report.pdf");
+  };
+
+  const handleDownloadPdf2 = () => {
+    const doc = new jsPDF();
+
+    // Set the title of the PDF
+    doc.setFontSize(18);
+    doc.text("Inventory Report", 14, 10);
+
+    const today = new Date();
+    const formattedDate = today.toLocaleDateString("en-GB"); // Format: DD/MM/YYYY
+    doc.setFontSize(12);
+    doc.text(formattedDate, doc.internal.pageSize.width - 20, 10, { align: "right" });
+
+
+    // Prepare the data for the table (headers and rows)
+    const headers = [
+      "Product Name",
      // "Price",
       "Quantity",
       "Vendor",
@@ -223,6 +307,7 @@ function InventoryPage() {
     // Save the PDF
     doc.save("inventory_report.pdf");
   };
+
 
   const filteredProducts = products.filter((product) =>
     product.name.toLowerCase().includes(searchTerm.toLowerCase()) || 
@@ -382,7 +467,15 @@ function InventoryPage() {
           color="secondary"
           onClick={handleDownloadPdf}
         >
-          Download as PDF
+          Download Inventory
+        </Button>
+
+        <Button
+          variant="contained"
+          color="secondary"
+          onClick={handleDownloadPdf2}
+        >
+          Download stock list
         </Button>
       </div>
 
