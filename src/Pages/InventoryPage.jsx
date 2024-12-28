@@ -439,6 +439,7 @@ function InventoryPage() {
           variant="contained"
           color="secondary"
           onClick={handleDownloadPdf}
+            sx={{ marginBottom: { xs: 2, sm: 0 } }} 
         >
           Download Inventory
         </Button>
