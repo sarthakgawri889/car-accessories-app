@@ -156,14 +156,14 @@ function InventoryPage() {
     // Prepare the data for the table (headers and rows)
     const headers = [
       "Product Name",
-      "Price",
+     // "Price",
       "Quantity",
       "Vendor",
      // "Total Price",
     ];
     const rows = filteredProducts.map((product) => [
       product.name,
-      `${product.price.toFixed(2)} Rs.`,
+    //  `${product.price.toFixed(2)} Rs.`,
       product.quantity.toString(),
       product.vendor,
      // `${(product.price * product.quantity).toFixed(2)} Rs.`,
