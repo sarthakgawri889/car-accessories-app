@@ -159,14 +159,14 @@ function InventoryPage() {
       "Price",
       "Quantity",
       "Vendor",
-      "Total Price",
+     // "Total Price",
     ];
     const rows = filteredProducts.map((product) => [
       product.name,
       `${product.price.toFixed(2)} Rs.`,
       product.quantity.toString(),
       product.vendor,
-      `${(product.price * product.quantity).toFixed(2)} Rs.`,
+     // `${(product.price * product.quantity).toFixed(2)} Rs.`,
     ]);
 
     // Apply autoTable to generate the table
@@ -195,30 +195,30 @@ function InventoryPage() {
       },
     });
 
-    const totalStockRows = calculateTotalRows();
-    doc.setFontSize(14);
-    doc.text(
-      `Total Stock Rows: ${totalStockRows.toFixed(2)}`,
-      14,
-      doc.autoTable.previous.finalY + 10
-    );
+    //const totalStockRows = calculateTotalRows();
+    //doc.setFontSize(14);
+    //doc.text(
+    //  `Total Stock Rows: ${totalStockRows.toFixed(2)}`,
+    //  14,
+    //  doc.autoTable.previous.finalY + 10
+    //);
 
-    const totalStockItems = calculateTotalItems();
-    doc.setFontSize(14);
-    doc.text(
-      `Total Stock Items: ${totalStockItems.toFixed(2)}`,
-      14,
-      doc.autoTable.previous.finalY + 20
-    );
+    //const totalStockItems = calculateTotalItems();
+    //doc.setFontSize(14);
+    //doc.text(
+     // `Total Stock Items: ${totalStockItems.toFixed(2)}`,
+     // 14,
+    //  doc.autoTable.previous.finalY + 20
+   // );
 
     // Add the total stock price below the table in a larger font
-    const totalStockPrice = calculateTotalStockPrice();
-    doc.setFontSize(14);
-    doc.text(
-      `Total Stock Price: ${totalStockPrice.toFixed(2)} Rs.`,
-      14,
-      doc.autoTable.previous.finalY + 30
-    );
+   // const totalStockPrice = calculateTotalStockPrice();
+    //doc.setFontSize(14);
+    //doc.text(
+    //  `Total Stock Price: ${totalStockPrice.toFixed(2)} Rs.`,
+    //  14,
+    //  doc.autoTable.previous.finalY + 30
+   // );
 
     // Save the PDF
     doc.save("inventory_report.pdf");
