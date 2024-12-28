@@ -229,7 +229,7 @@ function InventoryPage() {
 
     // Set the title of the PDF
     doc.setFontSize(18);
-    doc.text("Inventory Report", 14, 10);
+    doc.text("Stock List", 14, 10);
 
     const today = new Date();
     const formattedDate = today.toLocaleDateString("en-GB"); // Format: DD/MM/YYYY
