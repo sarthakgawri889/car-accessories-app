@@ -305,7 +305,7 @@ function InventoryPage() {
    // );
 
     // Save the PDF
-    doc.save("inventory_report.pdf");
+    doc.save("Stock_list.pdf");
   };
 
 
