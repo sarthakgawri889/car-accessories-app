@@ -80,10 +80,12 @@ const groupSalesByPeriod = (sales, period) => {
       if (saleDate.getFullYear() === currentDate.getFullYear()) {
         key = saleDate.toLocaleDateString("en-US", { month: "short", year: "numeric" });
       }
+    } else if (period === "yearlyGrouped") {
+      // Group sales by year
+      key = saleDate.getFullYear();
     }
 
     if (key) {
-      // Filter products by payment status
       const filteredProducts = sale.products.filter(
         (product) => product.paymentStatus === "received"
       );
@@ -93,7 +95,6 @@ const groupSalesByPeriod = (sales, period) => {
           acc[key] = { totalAmount: 0, totalProfit: 0, details: [] };
         }
 
-        // Add totals for the filtered products only
         const totalAmountForProducts = filteredProducts.reduce(
           (sum, product) => sum + product.total,
           0
@@ -106,7 +107,6 @@ const groupSalesByPeriod = (sales, period) => {
         acc[key].totalAmount += totalAmountForProducts;
         acc[key].totalProfit += totalProfitForProducts;
 
-        // Push the sale with filtered products
         acc[key].details.push({ ...sale, products: filteredProducts });
       }
     }
@@ -114,6 +114,7 @@ const groupSalesByPeriod = (sales, period) => {
     return acc;
   }, {});
 };
+
 
 
 
@@ -308,6 +309,7 @@ const groupSalesByPeriod = (sales, period) => {
             <Button onClick={() => setView("daily")}>Today Sales</Button>
             <Button onClick={() => setView("monthly")}>Daily Sales</Button>
             <Button onClick={() => setView("yearly")}>Monthly Sales</Button>
+            <Button onClick={() => setView("yearlyGrouped")}>Yearly Sales</Button>
           </ButtonGroup>
         </Box>
         <Grid container spacing={3}>
