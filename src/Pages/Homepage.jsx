@@ -70,7 +70,19 @@ function Homepage() {
       } else {
         loginWithRedirect();
       }
-    } else {
+    } else if(page==="/expense"){
+      if (isAuthenticated) {
+        navigate("/track");
+      } else {
+        loginWithRedirect();
+      }
+    }else if(page==="/trackpay"){
+      if (isAuthenticated) {
+        navigate("/track");
+      } else {
+        loginWithRedirect();
+      }
+    }else {
       alert(`${page} is not configured yet.`);
     }
   }
