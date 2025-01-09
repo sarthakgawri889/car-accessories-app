@@ -72,13 +72,13 @@ function Homepage() {
       }
     } else if(page==="/expense"){
       if (isAuthenticated) {
-        navigate("/track");
+        navigate("/expense");
       } else {
         loginWithRedirect();
       }
     }else if(page==="/trackpay"){
       if (isAuthenticated) {
-        navigate("/track");
+        navigate("/trackpay");
       } else {
         loginWithRedirect();
       }
