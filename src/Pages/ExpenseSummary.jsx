@@ -89,6 +89,9 @@ const ExpenseSummary = () => {
         if (expenseDate.getFullYear() === currentDate.getFullYear()) {
           key = expenseDate.toLocaleDateString("en-US", { month: "short", year: "numeric" });
         }
+      }else if (period === "yearlyGrouped") {
+        // Group sales by year
+        key = expenseDate.getFullYear();
       }
 
       if (key) {
@@ -269,6 +272,7 @@ const ExpenseSummary = () => {
             <Button onClick={() => setView("daily")}>Today Expenses</Button>
             <Button onClick={() => setView("monthly")}>Daily Expenses</Button>
             <Button onClick={() => setView("yearly")}>Monthly Expenses</Button>
+            <Button onClick={() => setView("yearlyGrouped")}>Yearly Sales</Button>
           </ButtonGroup>
         </Box>
         <Grid container spacing={3}>
